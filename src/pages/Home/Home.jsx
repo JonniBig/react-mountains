@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Section from 'components/Section/Section';
+// import Section from 'components/Section/Section';
 import Card from 'components/Card/Card';
 
 import { mountains } from 'db/data';
@@ -9,23 +9,19 @@ import {
   StyledCardSection,
   StyledGallerySection,
   StyledHeroSection,
+  StyledWelcomeSection,
 } from './Home.styled';
 
 const Home = () => {
   return (
     <div>
       <StyledHeroSection>
-        <h1 className="animate__animated animate__backInDown">
+        <h1 className="animate__animated animate__fadeInDown">
           Щастя не за горами. Щастя у горах.
         </h1>
       </StyledHeroSection>
-      <Section title="Ласкаво просимо на наш блог!">
-        {/* <Card
-          thumbs={[imgPipIvan]}
-          title="Pip Ivan"
-          description='третя по висоті вершина України. На ній розташована абсерваторій "Білий слон" Висота 2028 метрів.'
-        /> */}
-        <p>
+      <StyledWelcomeSection title="Ласкаво просимо на наш блог!">
+        <p className="text">
           Ласкаво запрошуємо на сторінку "Захоплення вершинами"! Тут ми
           зануримось у захоплюючі пригоди та незабутні враження від туристичних
           походів до височин, які перевершують хмари. Подорожі - це не тільки
@@ -40,8 +36,13 @@ const Home = () => {
           подорожі, де кожен похід - це можливість відкрити новий горизонт та
           здолати власні межі!
         </p>
-      </Section>
+      </StyledWelcomeSection>
       <StyledCardSection title="Маршрути">
+        <p className="text">
+          Вершини Карпат чекають на вас! Вирушайте в незабутні подорожі наших
+          туристичних маршрутів серед чарівних лісів, кришталевих потоків і
+          високогірних панорам. Відчуйте дух пригоди у серці Карпат!
+        </p>
         <div className="cardContainer">
           {mountains.map(mount => (
             <Card

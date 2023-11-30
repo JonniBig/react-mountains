@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 
 export const StyledCard = styled.div`
-  max-width: 500px;
+  max-width: 600px;
   max-height: 450px;
-  /* min-width: 320px; */
   width: 100%;
   min-height: 320px;
   position: relative;
@@ -15,19 +14,17 @@ export const StyledCard = styled.div`
     position: absolute;
     width: 100%;
     height: 100%;
-    /* min-width: 320px;
-    min-height: 320px; */
     background-image: url(${props => props.backgroundimg});
-    background-size: 570px;
+    background-size: 100%;
     background-position: center center;
     background-repeat: no-repeat;
-    transition: all 0.3s;
+    transition: all 0.8s;
     z-index: 1;
   }
   &:hover {
     .img {
       background-size: 750px;
-      background-position: left center;
+      background-position: top center;
       background-repeat: no-repeat;
     }
     .card {
@@ -39,13 +36,13 @@ export const StyledCard = styled.div`
     position: relative;
     opacity: 0;
     z-index: 2;
-    transition: opacity 0.3s;
+    transition: opacity 1.5s;
     background-image: linear-gradient(
       to bottom,
-      rgba(0, 0, 0, 0.05),
+      rgba(0, 0, 0, 0),
       rgba(0, 0, 0, 0.8)
     );
-    padding: 15px;
+    padding: 0 15px 40px 15px;
     margin-top: auto;
     text-align: center;
     color: white;

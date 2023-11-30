@@ -10,11 +10,12 @@ export const StyledSection = styled.section`
   .title-container {
     min-height: 50px;
     max-width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     overflow: hidden;
     position: relative;
   }
   .title {
+    font-size: xx-large;
     text-align: center;
     position: absolute;
     left: 50%;

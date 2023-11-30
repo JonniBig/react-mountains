@@ -7,7 +7,9 @@ export const StyledHeader = styled.header`
   min-height: 60px;
   display: flex;
   align-items: center;
-
+  position: absolute;
+  top: 0;
+  width: 100%;
   .container {
     display: flex;
     align-items: center;
@@ -19,14 +21,16 @@ export const StyledHeader = styled.header`
   }
   .navigation {
     display: flex;
-    gap: 4px;
+    gap: 20px;
   }
   .navlink {
-    padding: 12px 4px;
+    padding: 12px 8px;
     color: currentColor;
     border-radius: 4px;
     text-decoration: none;
     transition: all 0.3s;
+    box-shadow: rgb(136 138 136 / 57%) 6px 2px 16px 0px,
+      rgba(255, 255, 255, 0.5) -6px -2px 16px 0px;
   }
   .navlink:hover {
     box-shadow: rgb(136 138 136 / 57%) 3px 3px 6px 0px inset,
