@@ -1,16 +1,20 @@
 {
   "files": {
-    "main.css": "/react-mountains/static/css/main.c253cf51.css",
-    "main.js": "/react-mountains/static/js/main.c52a0084.js",
+    "main.css": "/react-mountains/static/css/main.45ff0ef6.css",
+    "main.js": "/react-mountains/static/js/main.1494e7fa.js",
+    "static/media/spic0.webp": "/react-mountains/static/media/spic0.79c2aa9c3c05bc0cd0ee.webp",
     "static/media/IMG_2601.webp": "/react-mountains/static/media/IMG_2601.b470b2de786cacda29db.webp",
-    "static/media/shpici.webp": "/react-mountains/static/media/shpici.ce089f0907f33b41f7ed.webp",
-    "static/media/petros.webp": "/react-mountains/static/media/petros.487d8e61440b12419de1.webp",
+    "static/media/pip0.webp": "/react-mountains/static/media/pip0.044a3fbeffc320c019b6.webp",
+    "static/media/hovarla0.webp": "/react-mountains/static/media/hovarla0.93e6025b0b8197fd00e3.webp",
+    "static/media/kos0.webp": "/react-mountains/static/media/kos0.3eb318860c0e0d6e2277.webp",
+    "static/media/petros0.webp": "/react-mountains/static/media/petros0.ab237ca3dcb253b4d5ea.webp",
+    "static/media/hom0.webp": "/react-mountains/static/media/hom0.83cef0f8fa953cb37f70.webp",
     "index.html": "/react-mountains/index.html",
-    "main.c253cf51.css.map": "/react-mountains/static/css/main.c253cf51.css.map",
-    "main.c52a0084.js.map": "/react-mountains/static/js/main.c52a0084.js.map"
+    "main.45ff0ef6.css.map": "/react-mountains/static/css/main.45ff0ef6.css.map",
+    "main.1494e7fa.js.map": "/react-mountains/static/js/main.1494e7fa.js.map"
   },
   "entrypoints": [
-    "static/css/main.c253cf51.css",
-    "static/js/main.c52a0084.js"
+    "static/css/main.45ff0ef6.css",
+    "static/js/main.1494e7fa.js"
   ]
 }
