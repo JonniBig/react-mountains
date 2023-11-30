@@ -1,6 +1,5 @@
 import imgPetros from 'assets/images/petros.webp';
 import imgShpici from 'assets/images/shpici.webp';
-import imgPipIvan from 'assets/images/pipivan.webp';
 
 export const mountains = [
   {
