@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/react-mountains/static/css/main.c253cf51.css",
+    "main.js": "/react-mountains/static/js/main.1c425759.js",
+    "static/media/IMG_2601.webp": "/react-mountains/static/media/IMG_2601.b470b2de786cacda29db.webp",
+    "static/media/shpici.webp": "/react-mountains/static/media/shpici.ce089f0907f33b41f7ed.webp",
+    "static/media/petros.webp": "/react-mountains/static/media/petros.487d8e61440b12419de1.webp",
+    "index.html": "/react-mountains/index.html",
+    "main.c253cf51.css.map": "/react-mountains/static/css/main.c253cf51.css.map",
+    "main.1c425759.js.map": "/react-mountains/static/js/main.1c425759.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c253cf51.css",
+    "static/js/main.1c425759.js"
+  ]
+}
