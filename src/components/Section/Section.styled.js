@@ -1,21 +1,22 @@
 import styled from 'styled-components';
 
 export const StyledSection = styled.section`
-  padding: 70px 0;
+  padding: 40px 0 70px;
   .container {
     max-width: 1280px;
     margin: 0 auto;
     padding: 0 12px;
   }
   .title-container {
-    min-height: 50px;
+    min-height: 105px;
     max-width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     overflow: hidden;
     position: relative;
   }
   .title {
-    font-size: xx-large;
+    font-size: 36px;
+    font-weight: 900;
     text-align: center;
     position: absolute;
     left: 50%;
