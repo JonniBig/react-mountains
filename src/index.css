@@ -1,3 +1,6 @@
+html {
+  scroll-behavior: smooth;
+}
 body {
   letter-spacing: 0.02em;
   /* font-family: Roboto, sans-serif; */

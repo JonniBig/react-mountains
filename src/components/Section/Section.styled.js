@@ -13,6 +13,9 @@ export const StyledSection = styled.section`
     margin-bottom: 10px;
     overflow: hidden;
     position: relative;
+    @media (max-width: 576px) {
+      min-height: 205px;
+    }
   }
   .title {
     font-size: 36px;

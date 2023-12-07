@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import 'react-image-gallery/styles/css/image-gallery.css';
 import 'animate.css';
 import { App } from 'components/App';
 import './index.css';

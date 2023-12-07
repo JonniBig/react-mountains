@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
-// import Section from 'components/Section/Section';
 import Card from 'components/Card/Card';
 
 import { mountains } from 'db/data';
@@ -12,8 +11,25 @@ import {
   StyledWelcomeSection,
 } from './Home.styled';
 import Gallery from 'components/Gallery/Gallery';
+import { useLocation } from 'react-router-dom';
 
 const Home = () => {
+  const galleryRef = useRef();
+  const routesRef = useRef();
+  const location = useLocation();
+  useEffect(() => {
+    if (!location.hash) return;
+    console.log(location.hash);
+    if (location.hash === '#gallery') {
+      galleryRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    if (location.hash === '#routes') {
+      routesRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
+  }, [location.hash]);
   return (
     <div>
       <StyledHeroSection>
@@ -44,7 +60,7 @@ const Home = () => {
           власні межі!
         </p>
       </StyledWelcomeSection>
-      <StyledGallerySection title="Галерея">
+      <StyledGallerySection ref={galleryRef} title="Галерея">
         <p className="text">
           Тут ви зможете насолоджуватися величчю гірських вершин, де кожен кадр
           — це оповідання про магію та велич природи. Дозвольте собі зануритися
@@ -57,7 +73,7 @@ const Home = () => {
         </p>
         <Gallery />
       </StyledGallerySection>
-      <StyledCardSection title="Маршрути">
+      <StyledCardSection ref={routesRef} title="Маршрути">
         <p className="text">
           Вершини Карпат чекають на вас! Вирушайте разом з нами в незабутні
           подорожі по наших туристичних маршрутах серед чарівних лісів,

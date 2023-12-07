@@ -9,10 +9,15 @@ export const StyledMountDetails = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   min-height: 100vh;
-  padding-top: 100px;
+  padding-top: 30px;
+  .gallery {
+    padding: 70px 20px;
+  }
   .innerContent {
     display: flex;
     gap: 30px;
+    justify-content: center;
+    margin-bottom: 35px;
   }
   .titleImg {
     width: 350px;
@@ -22,5 +27,19 @@ export const StyledMountDetails = styled.div`
     display: flex;
     flex-direction: column;
     gap: 20px;
+  }
+  .image-gallery {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .image-gallery-thumbnail .image-gallery-thumbnail-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  .image-gallery-thumbnail {
+    height: 68px;
+    overflow: hidden;
   }
 `;
