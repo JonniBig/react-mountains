@@ -161,6 +161,15 @@ export const mountains = [
     description:
       'Найвища вершина Українських Карпат і найвища точка України, її висота становить 2061 метр.',
     howToGet: 'Піднімайтеся по горі',
-    gallery: [],
+    gallery: [
+      imgKos1,
+      imgKos2,
+      imgKos3,
+      imgKos4,
+      imgKos5,
+      imgKos6,
+      imgKos7,
+      imgKos8,
+    ],
   },
 ];
