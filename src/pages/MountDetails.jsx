@@ -21,13 +21,8 @@ const MountDetails = () => {
       {mountainData !== undefined && (
         <div className="gallery">
           <div className="innerContent">
-            {/* <img
-              className="titleImg"
-              src={mountainData.thumbs[0]}
-              alt={mountainData.mountainName}
-            /> */}
             <div className="discription">
-              <h1>{mountainName}</h1>
+              <h1 className="title">{mountainName}</h1>
               <p>
                 Lorem ipsum dolor sanimi, quo magnam expedita perferendis
                 assumenda.

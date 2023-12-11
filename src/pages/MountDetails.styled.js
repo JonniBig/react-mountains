@@ -22,6 +22,9 @@ export const StyledMountDetails = styled.div`
   .titleImg {
     width: 350px;
   }
+  .title {
+    font-weight: 700;
+  }
   .discription {
     align-items: center;
     display: flex;
