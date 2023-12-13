@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { mountains } from 'db/data';
-import { StyledMountDetails } from './MountDetails.styled';
 import ReactImageGallery from 'react-image-gallery';
+import { useParams } from 'react-router-dom';
+import { StyledMountDetails } from './styled';
+import { mountains } from 'db/data';
 
 const MountDetails = () => {
   const { mountainName } = useParams();

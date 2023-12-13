@@ -5,7 +5,9 @@ import { HOME_ROUTE, MOUNTAIN_ROUTE } from 'constants/routes';
 import ScrollToTopButton from './Scroll/Scroll';
 
 const Home = React.lazy(() => import('pages/Home/Home'));
-const MountDetails = React.lazy(() => import('pages/MountDetails'));
+const MountDetails = React.lazy(() =>
+  import('pages/MountDetails/MountDetails')
+);
 const NotFound = React.lazy(() => import('pages/NotFound'));
 
 export const App = () => {
