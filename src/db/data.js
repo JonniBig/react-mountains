@@ -34,7 +34,7 @@ import imgHom4 from 'assets/images/routes/3/hom4.webp';
 import imgHom5 from 'assets/images/routes/3/hom5.webp';
 import imgHom6 from 'assets/images/routes/3/hom6.webp';
 import imgHom7 from 'assets/images/routes/3/hom7.webp';
-import imgShpic1 from '../assets/images/routes/Spic/shpic1.webp';
+import imgShpic1 from '../../src/assets/images/routes/Spic/shpic1.webp';
 import imgShpic2 from 'assets/images/routes/Spic/shpic2.webp';
 import imgShpic3 from 'assets/images/routes/Spic/shpic3.webp';
 import imgShpic4 from 'assets/images/routes/Spic/shpic4.webp';
