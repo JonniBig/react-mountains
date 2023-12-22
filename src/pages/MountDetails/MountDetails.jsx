@@ -47,7 +47,7 @@ const MountDetails = () => {
               />
             </div>
             {galleryImages.map(i => (
-              <img width="250" src={'./' + i.original} alt={'Imagecvccb'} />
+              <img width="250" src={i.original} alt={'Imagecvccb'} />
             ))}
           </div>
         )}
