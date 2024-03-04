@@ -46,9 +46,6 @@ const MountDetails = () => {
                 items={galleryImages}
               />
             </div>
-            {galleryImages.map(i => (
-              <img width="250" src={i.original} alt={'Imagecvccb'} />
-            ))}
           </div>
         )}
       </StyledMountDetails>
