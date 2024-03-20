@@ -14,7 +14,7 @@ export const StyledCard = styled.div`
     position: absolute;
     width: 100%;
     height: 100%;
-    background-image: url(${props => props.backgroundimg});
+    background-image: url(${props => props.$backgroundimg});
     background-size: 100%;
     background-position: center center;
     background-repeat: no-repeat;

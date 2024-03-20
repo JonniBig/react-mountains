@@ -31,6 +31,10 @@ export const StyledHeroSection = styled(Section)`
       rgba(255, 255, 255, 0.5)
     ),
     url(${imgHero});
+  filter: ${() =>
+    document.body.classList.contains('light')
+      ? 'grayscale(0)'
+      : 'grayscale(1)'};
   background-position: center bottom;
   background-repeat: no-repeat;
   background-size: cover;
@@ -48,6 +52,8 @@ export const StyledWelcomeSection = styled(Section)`
 `;
 
 export const StyledGallerySection = styled(Section)`
+  background-color: rgba(218, 233, 241, 1);
+
   .text {
     font-size: 18px;
     line-height: 1.5em;

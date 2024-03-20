@@ -8,6 +8,20 @@ body {
   margin: 0;
   font-weight: 400;
 }
+
+body.light {
+  --primary-color: #000;
+  --primary-color: #000;
+  --primary-color: #000;
+  color: #000;
+  --primary-color: #000;
+  --primary-color: #000;
+}
+
+body.dark {
+  color: #fff;
+}
+
 * {
   box-sizing: border-box;
 }

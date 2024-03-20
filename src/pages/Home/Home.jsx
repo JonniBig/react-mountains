@@ -19,7 +19,6 @@ const Home = () => {
   const location = useLocation();
   useEffect(() => {
     if (!location.hash) return;
-    console.log(location.hash);
     if (location.hash === '#gallery') {
       galleryRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
