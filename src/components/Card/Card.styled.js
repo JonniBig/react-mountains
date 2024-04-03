@@ -1,6 +1,7 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const StyledCard = styled.div`
+export const StyledCard = styled(Link)`
   max-width: 600px;
   max-height: 450px;
   width: 100%;
@@ -15,7 +16,7 @@ export const StyledCard = styled.div`
     width: 100%;
     height: 100%;
     background-image: url(${props => props.$backgroundimg});
-    background-size: 100%;
+    background-size: 110%;
     background-position: center center;
     background-repeat: no-repeat;
     transition: all 0.8s;
@@ -45,7 +46,7 @@ export const StyledCard = styled.div`
     padding: 0 15px 40px 15px;
     margin-top: auto;
     text-align: center;
-    color: white;
+    color: var(--primary-color-card);
   }
   .cardTitle {
   }

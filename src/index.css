@@ -3,23 +3,49 @@ html {
 }
 body {
   letter-spacing: 0.02em;
-  /* font-family: Roboto, sans-serif; */
   font-family: 'Roboto Condensed', sans-serif;
   margin: 0;
   font-weight: 400;
 }
 
 body.light {
+  --primary-color-card: #fff;
+  --primary-background-color-blue: linear-gradient(
+    to left,
+    rgba(218, 233, 241, 1),
+    rgba(218, 233, 241, 1)
+  );
+  --primary-title-color: #000;
+
+  --primary-background-color-grey: #c0c0c0;
+  --primary-background-color-transparent: rgba(255, 255, 255, 0.15);
+  --primary-background-color-lightgrey: linear-gradient(
+    to right,
+    #eceef5,
+    #eceef5
+  );
   --primary-color: #000;
-  --primary-color: #000;
-  --primary-color: #000;
-  color: #000;
-  --primary-color: #000;
-  --primary-color: #000;
+  --color-text-gallery: #000000;
 }
 
 body.dark {
-  color: #fff;
+  --primary-color-card: #fff;
+  --primary-background-color-blue: radial-gradient(
+    circle,
+    rgba(54, 83, 63, 1) 0%,
+    rgba(11, 18, 13, 1) 100%
+  );
+  --primary-title-color: #998700;
+
+  --primary-background-color-grey: #c0c0c0;
+  --primary-background-color-transparent: rgba(255, 255, 255, 0.15);
+  --primary-background-color-lightgrey: radial-gradient(
+    circle,
+    rgba(54, 83, 63, 1) 0%,
+    rgba(11, 18, 13, 1) 100%
+  );
+  --color-text-gallery: #c7b003;
+  --primary-color: #16231a;
 }
 
 * {

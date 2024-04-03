@@ -1,24 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { StyledThemeSwitcher } from './ThemeSwitcher.styled';
-
-const THEME_INITIAL_STATE = 'ligth';
+import { themeContext } from 'context/ThemeContext';
 
 const ThemeSwitcher = () => {
-  const [theme, setTheme] = useState(() => {
-    const savedTheme = localStorage.getItem('theme');
-    if (!savedTheme) return THEME_INITIAL_STATE;
-    return savedTheme;
-  });
-  const onToggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
-  };
-  useEffect(() => {
-    const body = document.body;
-
-    body.className = theme;
-
-    localStorage.setItem('theme', theme);
-  }, [theme]);
+  const { onToggleTheme, theme } = useContext(themeContext);
   return (
     <StyledThemeSwitcher>
       <input

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 export const StyledFooter = styled.footer`
-  background-color: rgba(218, 233, 241, 1);
+  background-color: var(--primary-background-color-blue);
 
   box-shadow: rgba(0, 0, 0, 0.07) 0px -1px 1px, rgba(0, 0, 0, 0.07) 0px -2px 2px,
     rgba(0, 0, 0, 0.07) 0px -4px 4px, rgba(0, 0, 0, 0.07) 0px -8px 8px,

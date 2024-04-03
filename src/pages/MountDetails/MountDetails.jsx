@@ -2,19 +2,26 @@ import React, { useEffect } from 'react';
 import ReactImageGallery from 'react-image-gallery';
 import { useParams } from 'react-router-dom';
 import { StyledMountDetails } from './styled';
-import { mountains } from 'db/data';
+import { usePrismicDocumentByUID } from '@prismicio/react';
+import * as prismicH from '@prismicio/helpers';
+import MyLoader from 'components/Loader/Loader';
 
 const MountDetails = () => {
   const { mountainName } = useParams();
-  const mountainData = mountains.find(
-    mountain => mountainName === mountain.mountainName
+  const [page, { state }] = usePrismicDocumentByUID(
+    'mountain-routes',
+    mountainName
   );
-  console.log('mountainData: ', mountainData);
-  const galleryImages = mountainData.gallery?.map(image => ({
-    original: image,
-    thumbnail: image,
+
+  const mountainData = page?.data;
+
+  const galleryImages = mountainData?.gallery?.map(imageObj => ({
+    original: prismicH.asImageSrc(imageObj.gallery_img),
+    thumbnail: prismicH.asImageSrc(imageObj.gallery_img),
   }));
-  console.log('galleryImages: ', galleryImages);
+  const mountainBg = prismicH.asImageSrc(mountainData?.mountain_img);
+  const mountainTitle = prismicH.asText(mountainData?.mountain_name);
+  const mountainDescription = prismicH.asText(mountainData?.description);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -22,32 +29,32 @@ const MountDetails = () => {
 
   return (
     <div>
-      <StyledMountDetails $backgroundimg={mountainData.thumbs[0]}>
-        {mountainData !== undefined && (
-          <div className="gallery">
-            <div className="innerContent">
-              <div className="discription">
-                <h1 className="title">{mountainName}</h1>
-                <p>
-                  Lorem ipsum dolor sanimi, quo magnam expedita perferendis
-                  assumenda.
-                </p>
+      <StyledMountDetails $backgroundimg={mountainBg}>
+        <div className="gallery">
+          {state === 'loading' && <MyLoader />}
+          {state === 'loaded' && (
+            <>
+              <div className="innerContent">
+                <div className="discription">
+                  <h1 className="title">{mountainTitle}</h1>
+                  <p>{mountainDescription}</p>
+                </div>
               </div>
-            </div>
-            <div>
-              <ReactImageGallery
-                autoPlay={false}
-                showPlayButton={false}
-                slideOnThumbnailOver={true}
-                lazyLoad={true}
-                disableKeyDown={false}
-                slideDuration={1000}
-                thumbnailPosition="top"
-                items={galleryImages}
-              />
-            </div>
-          </div>
-        )}
+              <div>
+                <ReactImageGallery
+                  autoPlay={false}
+                  showPlayButton={false}
+                  slideOnThumbnailOver={true}
+                  lazyLoad={true}
+                  disableKeyDown={false}
+                  slideDuration={1000}
+                  thumbnailPosition="top"
+                  items={galleryImages}
+                />
+              </div>
+            </>
+          )}
+        </div>
       </StyledMountDetails>
     </div>
   );

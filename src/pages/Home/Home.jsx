@@ -1,9 +1,9 @@
-import React, { useEffect, useRef } from 'react';
-
 import Card from 'components/Card/Card';
-
-import { mountains } from 'db/data';
-
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Scrollbar, EffectCoverflow } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/scrollbar';
+import 'swiper/css/effect-coverflow';
 import {
   StyledCardSection,
   StyledGallerySection,
@@ -11,27 +11,40 @@ import {
   StyledWelcomeSection,
 } from './Home.styled';
 import Gallery from 'components/Gallery/Gallery';
+import { themeContext } from 'context/ThemeContext';
+import { useContext, useEffect, useRef } from 'react';
+import * as prismicH from '@prismicio/helpers';
+import { useAllPrismicDocumentsByType } from '@prismicio/react';
 import { useLocation } from 'react-router-dom';
 
 const Home = () => {
+  const { theme } = useContext(themeContext);
+  const [documents] = useAllPrismicDocumentsByType('mountain-routes');
   const galleryRef = useRef();
   const routesRef = useRef();
   const location = useLocation();
+
   useEffect(() => {
     if (!location.hash) return;
     if (location.hash === '#gallery') {
-      galleryRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      galleryRef.current.scrollIntoView({
+        behavior: 'smooth',
+        alignToTop: true,
+      });
     }
     if (location.hash === '#routes') {
       routesRef.current.scrollIntoView({
         behavior: 'smooth',
-        block: 'start',
+        alignToTop: true,
       });
     }
   }, [location.hash]);
+
+  const cards = documents?.map(doc => doc.data.mountain_card?.[0]) ?? [];
+
   return (
     <div>
-      <StyledHeroSection>
+      <StyledHeroSection $theme={theme}>
         <h1 className="animate__animated animate__fadeInDown">
           Щастя не за горами. Щастя у горах.
         </h1>
@@ -59,7 +72,7 @@ const Home = () => {
           власні межі!
         </p>
       </StyledWelcomeSection>
-      <StyledGallerySection ref={galleryRef} title="Галерея">
+      <StyledGallerySection ref={galleryRef} title="Галерея" id="gallery">
         <p className="text">
           Тут ви зможете насолоджуватися величчю гірських вершин, де кожен кадр
           — це оповідання про магію та велич природи. Дозвольте собі зануритися
@@ -72,23 +85,47 @@ const Home = () => {
         </p>
         <Gallery />
       </StyledGallerySection>
-      <StyledCardSection ref={routesRef} title="Маршрути">
+      <StyledCardSection ref={routesRef} title="Маршрути" id="routes">
         <p className="text">
           Вершини Карпат чекають на вас! Вирушайте разом з нами в незабутні
           подорожі по наших туристичних маршрутах серед чарівних лісів,
           кришталевих потоків і високогірних панорам. Відчуйте дух пригоди у
           серці Карпат!
         </p>
-        <div className="cardContainer">
-          {mountains.map(mount => (
-            <Card
-              key={mount.mountainName}
-              title={mount.mountainName}
-              thumbs={mount.thumbs}
-              description={mount.description}
-            />
-          ))}
-        </div>
+        <Swiper
+          className="swiper"
+          modules={[Scrollbar, EffectCoverflow]}
+          effect="coverflow"
+          initialSlide={2}
+          loop={true}
+          spaceBetween={20}
+          slidesPerView={3}
+          scrollbar={{ draggable: true }}
+          coverflowEffect={{
+            rotate: 20,
+            stretch: 30,
+            depth: 100,
+            modifier: 2,
+            slideShadows: true,
+          }}
+        >
+          {cards.map(mount => {
+            const title = prismicH.asText(mount.card_title);
+            const id = prismicH.asText(mount.card_id);
+            const thumbs = mount.card_img.url;
+            const description = prismicH.asText(mount.card_description);
+            return (
+              <SwiperSlide key={title}>
+                <Card
+                  id={id}
+                  title={title}
+                  thumbs={thumbs}
+                  description={description}
+                />
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
       </StyledCardSection>
     </div>
   );

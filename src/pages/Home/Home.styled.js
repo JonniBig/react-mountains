@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import imgHero from 'assets/images/IMG_2601.webp';
 
 export const StyledCardSection = styled(Section)`
-  background-color: #eceef5;
+  background-image: var(--primary-background-color-lightgrey);
 
   .cardContainer {
     display: grid;
@@ -16,6 +16,10 @@ export const StyledCardSection = styled(Section)`
     font-size: 18px;
     line-height: 1.5em;
     text-align: center;
+  }
+  .swiper {
+    padding-bottom: 20px;
+    padding-top: 60px;
   }
 `;
 
@@ -31,10 +35,8 @@ export const StyledHeroSection = styled(Section)`
       rgba(255, 255, 255, 0.5)
     ),
     url(${imgHero});
-  filter: ${() =>
-    document.body.classList.contains('light')
-      ? 'grayscale(0)'
-      : 'grayscale(1)'};
+  filter: ${props =>
+    props.$theme === 'light' ? 'grayscale(0)' : 'grayscale(1)'};
   background-position: center bottom;
   background-repeat: no-repeat;
   background-size: cover;
@@ -42,7 +44,7 @@ export const StyledHeroSection = styled(Section)`
 `;
 
 export const StyledWelcomeSection = styled(Section)`
-  background-color: #eceef5;
+  background-image: var(--primary-background-color-lightgrey);
 
   .text {
     font-size: 18px;
@@ -52,9 +54,10 @@ export const StyledWelcomeSection = styled(Section)`
 `;
 
 export const StyledGallerySection = styled(Section)`
-  background-color: rgba(218, 233, 241, 1);
+  background-image: var(--primary-background-color-blue);
 
   .text {
+    color: var(--color-text-gallery);
     font-size: 18px;
     line-height: 1.5em;
     margin-bottom: 60px;

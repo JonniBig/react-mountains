@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { StyledHeader, StyledMobileMenu } from './Header.styled';
 import imgLogo from '../../assets/images/logo-mountain-48.png';
 import { ReactComponent as IconClose } from 'assets/images/close.svg';
@@ -9,9 +9,14 @@ import ThemeSwitcher from 'components/ThemeSwitcher/ThemeSwitcher';
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
+
   const onToggleMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location]);
   useEffect(() => {
     const body = document.body;
     if (isMobileMenuOpen) {
@@ -31,12 +36,24 @@ const Header = () => {
           <NavLink className="navlink" to={HOME_ROUTE}>
             Головна
           </NavLink>
-          <NavLink className="navlink" to={`${HOME_ROUTE}#routes`}>
-            Маршрути
-          </NavLink>
-          <NavLink className="navlink" to={`${HOME_ROUTE}#gallery`}>
-            Галерея
-          </NavLink>
+          {location.pathname !== HOME_ROUTE ? (
+            <Link className="navlink" to="/#routes">
+              Маршрути
+            </Link>
+          ) : (
+            <a className="navlink" href="#routes">
+              Маршрути
+            </a>
+          )}
+          {location.pathname !== HOME_ROUTE ? (
+            <Link className="navlink" to="/#gallery">
+              Галерея
+            </Link>
+          ) : (
+            <a className="navlink" href="#gallery">
+              Галерея
+            </a>
+          )}
         </nav>
         <button type="button" className="btnBurger" onClick={onToggleMenu}>
           <IconBurger />
@@ -56,12 +73,12 @@ const MobileMenu = ({ isOpen, onToggleMenu }) => {
         <NavLink className="mobileNavlink" to={HOME_ROUTE}>
           Головна
         </NavLink>
-        <NavLink className="mobileNavlink" to={`${HOME_ROUTE}#routes`}>
-          Маршрути
-        </NavLink>
-        <NavLink className="mobileNavlink" to={`${HOME_ROUTE}#gallery`}>
+        <a className="mobileNavlink" href="#gallery">
           Галерея
-        </NavLink>
+        </a>
+        <a className="mobileNavlink" href="#routes">
+          Маршрути
+        </a>
       </div>
     </StyledMobileMenu>
   );
