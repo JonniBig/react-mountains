@@ -38,8 +38,14 @@ export const StyledMountDetails = styled.div`
   .image-gallery-thumbnail .image-gallery-thumbnail-image {
     width: 100%;
     height: 100%;
+    max-height: 57px;
     object-fit: cover;
     object-position: center;
+  }
+  @media screen and (min-width: 768px) {
+    .image-gallery-thumbnail-image {
+      max-height: 69px;
+    }
   }
   .image-gallery-thumbnail {
     height: 68px;

@@ -6,6 +6,8 @@ import { ReactComponent as IconClose } from 'assets/images/close.svg';
 import { ReactComponent as IconBurger } from 'assets/images/burger.svg';
 import { HOME_ROUTE } from 'constants/routes';
 import ThemeSwitcher from 'components/ThemeSwitcher/ThemeSwitcher';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth } from 'auth/base';
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -14,9 +16,11 @@ const Header = () => {
   const onToggleMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
+
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location]);
+
   useEffect(() => {
     const body = document.body;
     if (isMobileMenuOpen) {
@@ -25,6 +29,17 @@ const Header = () => {
       body.style.overflow = 'auto';
     }
   }, [isMobileMenuOpen]);
+
+  const onGoogleLogin = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      console.log('result: ', result);
+    } catch (error) {
+      console.log('error: ', error);
+    }
+  };
+
   return (
     <StyledHeader>
       <div className="container">
@@ -32,6 +47,9 @@ const Header = () => {
           <img src={imgLogo} alt="logo" />
         </Link>
         <ThemeSwitcher />
+        <button type="button" onClick={onGoogleLogin}>
+          Login with Google
+        </button>
         <nav className="navigation">
           <NavLink className="navlink" to={HOME_ROUTE}>
             Головна
@@ -64,6 +82,8 @@ const Header = () => {
   );
 };
 const MobileMenu = ({ isOpen, onToggleMenu }) => {
+  const location = useLocation();
+
   return (
     <StyledMobileMenu className={isOpen ? 'open' : ''}>
       <button type="button" className="btnClose" onClick={onToggleMenu}>
@@ -73,12 +93,24 @@ const MobileMenu = ({ isOpen, onToggleMenu }) => {
         <NavLink className="mobileNavlink" to={HOME_ROUTE}>
           Головна
         </NavLink>
-        <a className="mobileNavlink" href="#gallery">
-          Галерея
-        </a>
-        <a className="mobileNavlink" href="#routes">
-          Маршрути
-        </a>
+        {location.pathname !== HOME_ROUTE ? (
+          <Link className="mobileNavlink" to="/#gallery">
+            Галерея
+          </Link>
+        ) : (
+          <a onClick={onToggleMenu} className="mobileNavlink" href="#gallery">
+            Галерея
+          </a>
+        )}
+        {location.pathname !== HOME_ROUTE ? (
+          <Link className="mobileNavlink" to="/#routes">
+            Маршрути
+          </Link>
+        ) : (
+          <a onClick={onToggleMenu} className="mobileNavlink" href="#routes">
+            Маршрути
+          </a>
+        )}
       </div>
     </StyledMobileMenu>
   );

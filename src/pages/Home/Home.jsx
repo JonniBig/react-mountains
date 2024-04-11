@@ -101,10 +101,47 @@ const Home = () => {
           spaceBetween={20}
           slidesPerView={3}
           scrollbar={{ draggable: true }}
+          breakpoints={{
+            320: {
+              slidesPerView: 1,
+              spaceBetween: 20,
+              coverflowEffect: {
+                rotate: 40,
+                stretch: 30,
+                modifier: 2,
+                slideShadows: false,
+              },
+            },
+            475: {
+              slidesPerView: 1,
+              spaceBetween: 30,
+            },
+            768: {
+              slidesPerView: 2,
+              spaceBetween: 50,
+              coverflowEffect: {
+                rotate: 20,
+                stretch: 30,
+                depth: 50,
+                modifier: 2,
+                slideShadows: false,
+              },
+            },
+            1200: {
+              slidesPerView: 3,
+              coverflowEffect: {
+                rotate: 20,
+                stretch: 30,
+                depth: 90,
+                modifier: 2,
+                slideShadows: true,
+              },
+            },
+          }}
           coverflowEffect={{
             rotate: 20,
             stretch: 30,
-            depth: 100,
+            depth: 90,
             modifier: 2,
             slideShadows: true,
           }}
