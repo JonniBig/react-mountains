@@ -6,8 +6,7 @@ import { ReactComponent as IconClose } from 'assets/images/close.svg';
 import { ReactComponent as IconBurger } from 'assets/images/burger.svg';
 import { HOME_ROUTE } from 'constants/routes';
 import ThemeSwitcher from 'components/ThemeSwitcher/ThemeSwitcher';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { auth } from 'auth/base';
+import UserMenu from 'components/UserMenu/UserMenu';
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -30,16 +29,6 @@ const Header = () => {
     }
   }, [isMobileMenuOpen]);
 
-  const onGoogleLogin = async () => {
-    const provider = new GoogleAuthProvider();
-    try {
-      const result = await signInWithPopup(auth, provider);
-      console.log('result: ', result);
-    } catch (error) {
-      console.log('error: ', error);
-    }
-  };
-
   return (
     <StyledHeader>
       <div className="container">
@@ -47,9 +36,6 @@ const Header = () => {
           <img src={imgLogo} alt="logo" />
         </Link>
         <ThemeSwitcher />
-        <button type="button" onClick={onGoogleLogin}>
-          Login with Google
-        </button>
         <nav className="navigation">
           <NavLink className="navlink" to={HOME_ROUTE}>
             Головна
@@ -72,6 +58,7 @@ const Header = () => {
               Галерея
             </a>
           )}
+          <UserMenu />
         </nav>
         <button type="button" className="btnBurger" onClick={onToggleMenu}>
           <IconBurger />

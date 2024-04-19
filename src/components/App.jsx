@@ -1,17 +1,27 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Layout from './Layout/Layout';
-import { HOME_ROUTE, MOUNTAIN_ROUTE } from 'constants/routes';
+import {
+  HOME_ROUTE,
+  LOGIN_ROUTE,
+  MOUNTAIN_ROUTE,
+  REGISTER_ROUTE,
+} from 'constants/routes';
 import ScrollToTopButton from './Scroll/Scroll';
 import Home from 'pages/Home/Home';
 import NotFound from 'pages/NotFound';
 import MountDetails from 'pages/MountDetails/MountDetails';
+import Register from 'pages/Register/Register';
+import Login from 'pages/Login/Login';
 
 export const App = () => {
   return (
     <Layout>
       <Routes>
         <Route path={HOME_ROUTE} element={<Home />} />
+        <Route path={REGISTER_ROUTE} element={<Register />} />
+        <Route path={LOGIN_ROUTE} element={<Login />} />
+
         <Route
           path={`${MOUNTAIN_ROUTE}/:mountainName`}
           element={<MountDetails />}

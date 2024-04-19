@@ -30,11 +30,7 @@ export const StyledHeroSection = styled(Section)`
   justify-content: center;
   text-align: center;
   font-size: 60px;
-  background-image: linear-gradient(
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.5)
-    ),
-    url(${imgHero});
+  background-image: var(--hero-section-gradient), url(${imgHero});
   filter: ${props =>
     props.$theme === 'light' ? 'grayscale(0)' : 'grayscale(1)'};
   background-position: center bottom;

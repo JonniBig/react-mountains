@@ -7,6 +7,9 @@ body {
   margin: 0;
   font-weight: 400;
 }
+:root {
+  --footer-height: 37px;
+}
 
 body.light {
   --primary-color-card: #fff;
@@ -16,7 +19,10 @@ body.light {
     rgba(218, 233, 241, 1)
   );
   --primary-title-color: #000;
-
+  --hero-section-gradient: linear-gradient(
+    rgba(255, 255, 255, 0.5),
+    rgba(255, 255, 255, 0.5)
+  );
   --primary-background-color-grey: #c0c0c0;
   --primary-background-color-transparent: rgba(255, 255, 255, 0.15);
   --primary-background-color-lightgrey: linear-gradient(
@@ -36,7 +42,10 @@ body.dark {
     rgba(11, 18, 13, 1) 100%
   );
   --primary-title-color: #998700;
-
+  --hero-section-gradient: linear-gradient(
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0)
+  );
   --primary-background-color-grey: #c0c0c0;
   --primary-background-color-transparent: rgba(255, 255, 255, 0.15);
   --primary-background-color-lightgrey: radial-gradient(
@@ -66,7 +75,7 @@ ul {
 }
 button {
   font-family: inherit;
-  color: currentColor;
+  color: inherit;
   cursor: pointer;
 }
 img {
@@ -76,4 +85,5 @@ img {
 }
 a {
   text-decoration: none;
+  color: inherit;
 }

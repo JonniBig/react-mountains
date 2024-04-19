@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import imgMobMenu from 'assets/images/mobileMenu/forest.png';
+import imgMobMenu from 'assets/images/mobileMenu/mountain.png';
 
 export const StyledHeader = styled.header`
   background-color: var(--primary-background-color-transparent);
@@ -25,6 +25,7 @@ export const StyledHeader = styled.header`
   .navigation {
     display: none;
     gap: 20px;
+    align-items: center;
   }
 
   @media screen and (min-width: 768px) {
@@ -60,7 +61,7 @@ export const StyledHeader = styled.header`
 `;
 
 export const StyledMobileMenu = styled.div`
-  background-image: url(${imgMobMenu});
+  background-image: url(${imgMobMenu}), var(--hero-section-gradient);
   background-position: center top;
   background-repeat: no-repeat;
   background-size: cover;
@@ -71,7 +72,6 @@ export const StyledMobileMenu = styled.div`
   width: 100vw;
   min-height: 100vh;
   padding: 24px 15px;
-  background-color: var(--primary-background-color-blue);
   transform: translateX(110%);
   transition: all 0.3s;
   &.open {
@@ -79,8 +79,8 @@ export const StyledMobileMenu = styled.div`
   }
   .btnClose {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 2px;
+    right: 12px;
     background-color: transparent;
     border: none;
     padding: 12px;
