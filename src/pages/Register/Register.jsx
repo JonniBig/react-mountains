@@ -9,6 +9,11 @@ import {
 import { auth } from 'auth/base';
 import { useForm } from 'react-hook-form';
 
+import { ReactComponent as IconFacebook } from 'assets/images/socialMedia/facebook.svg';
+import { ReactComponent as IconGoogle } from 'assets/images/socialMedia/google.svg';
+import { ReactComponent as IconApple } from 'assets/images/socialMedia/apple.svg';
+import { ReactComponent as IconGit } from 'assets/images/socialMedia/git.svg';
+
 const Register = () => {
   const {
     register,
@@ -45,8 +50,8 @@ const Register = () => {
       <Section title="Реєстрація">
         <form className="form" onSubmit={handleSubmit(onSubmit)}>
           <label className="formLabel">
-            <span className="labelText">Ім'я</span>
             <input
+              placeholder="Ім'я"
               className="labelInput"
               type="text"
               {...register('name', { required: true })}
@@ -54,8 +59,9 @@ const Register = () => {
             {errors.name && <span>This field is required</span>}
           </label>
           <label className="formLabel">
-            <span className="labelText">Пошта</span>
+            {/* <span className="labelText">Пошта</span> */}
             <input
+              placeholder="Пошта"
               className="labelInput"
               type="email"
               {...register('email', { required: true })}
@@ -63,27 +69,36 @@ const Register = () => {
             {errors.email && <span>This field is required</span>}
           </label>
           <label className="formLabel">
-            <span className="labelText">Пароль</span>
+            {/* <span className="labelText">Пароль</span> */}
             <input
+              placeholder="Пароль"
               className="labelInput"
               type="password"
               {...register('password', { required: true })}
             />
             {errors.password && <span>This field is required</span>}
           </label>
-
           <button className="formSubmitBtn" type="submit">
             Зареєструватися
           </button>
-          <button className="socialLogin" type="button" onClick={onGoogleLogin}>
-            Google
-          </button>
-          <button className="socialLogin" type="button">
-            Facebook
-          </button>
-          <button className="socialLogin" type="button">
-            GitHub
-          </button>
+          <div className="socialBtnContainer">
+            <button
+              className="socialLogin"
+              type="button"
+              onClick={onGoogleLogin}
+            >
+              <IconGoogle />
+            </button>
+            <button className="socialLogin" type="button">
+              <IconFacebook />
+            </button>
+            <button className="socialLogin" type="button">
+              <IconApple />
+            </button>
+            <button className="socialLogin" type="button">
+              <IconGit />
+            </button>
+          </div>
         </form>
       </Section>
     </StyledRegisterPage>
