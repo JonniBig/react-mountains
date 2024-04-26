@@ -2,17 +2,18 @@ import React from 'react';
 import { StyledRegisterPage } from './Register.styled';
 import Section from 'components/Section/Section';
 import {
-  GoogleAuthProvider,
+  GithubAuthProvider,
   createUserWithEmailAndPassword,
   signInWithPopup,
 } from 'firebase/auth';
 import { auth } from 'auth/base';
 import { useForm } from 'react-hook-form';
 
-import { ReactComponent as IconFacebook } from 'assets/images/socialMedia/facebook.svg';
 import { ReactComponent as IconGoogle } from 'assets/images/socialMedia/google.svg';
 import { ReactComponent as IconApple } from 'assets/images/socialMedia/apple.svg';
 import { ReactComponent as IconGit } from 'assets/images/socialMedia/git.svg';
+import { useDispatch } from 'react-redux';
+import { registerThunkWithGoogle } from '../../redux/auth/authSlice';
 
 const Register = () => {
   const {
@@ -20,6 +21,8 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const dispatch = useDispatch();
 
   const onSubmit = async data => {
     const response = await createUserWithEmailAndPassword(
@@ -37,14 +40,19 @@ const Register = () => {
   };
 
   const onGoogleLogin = async () => {
-    const provider = new GoogleAuthProvider();
+    dispatch(registerThunkWithGoogle());
+  };
+
+  const onGithubLogin = async () => {
+    const provider = new GithubAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
-      console.log('result: ', result);
+      console.log('result: ', result.user);
     } catch (error) {
       console.log('error: ', error);
     }
   };
+
   return (
     <StyledRegisterPage>
       <Section title="Реєстрація">
@@ -59,7 +67,6 @@ const Register = () => {
             {errors.name && <span>This field is required</span>}
           </label>
           <label className="formLabel">
-            {/* <span className="labelText">Пошта</span> */}
             <input
               placeholder="Пошта"
               className="labelInput"
@@ -69,7 +76,6 @@ const Register = () => {
             {errors.email && <span>This field is required</span>}
           </label>
           <label className="formLabel">
-            {/* <span className="labelText">Пароль</span> */}
             <input
               placeholder="Пароль"
               className="labelInput"
@@ -89,13 +95,15 @@ const Register = () => {
             >
               <IconGoogle />
             </button>
-            <button className="socialLogin" type="button">
-              <IconFacebook />
-            </button>
+
             <button className="socialLogin" type="button">
               <IconApple />
             </button>
-            <button className="socialLogin" type="button">
+            <button
+              className="socialLogin"
+              type="button"
+              onClick={onGithubLogin}
+            >
               <IconGit />
             </button>
           </div>

@@ -17,7 +17,6 @@ export const StyledRegisterPage = styled.div`
   }
 
   .labelInput {
-    margin-left: 15px;
     border: none;
     padding: 12px 8px;
     color: var(--primary-color);
@@ -40,6 +39,8 @@ export const StyledRegisterPage = styled.div`
     background-color: transparent;
     padding: 12px 8px;
     color: var(--primary-color);
+    letter-spacing: 0.025em;
+    font-weight: 600;
     border-radius: 4px;
     text-decoration: none;
     transition: all 0.3s;

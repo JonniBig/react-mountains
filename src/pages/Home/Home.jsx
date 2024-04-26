@@ -149,14 +149,14 @@ const Home = () => {
           {cards.map(mount => {
             const title = prismicH.asText(mount.card_title);
             const id = prismicH.asText(mount.card_id);
-            const thumbs = mount.card_img.url;
+            const thumb = mount.card_img.url;
             const description = prismicH.asText(mount.card_description);
             return (
               <SwiperSlide key={title}>
                 <Card
                   id={id}
                   title={title}
-                  thumbs={thumbs}
+                  thumbs={thumb}
                   description={description}
                 />
               </SwiperSlide>

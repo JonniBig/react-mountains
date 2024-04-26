@@ -8,15 +8,19 @@ import { BrowserRouter } from 'react-router-dom';
 import ThemeContextProvider from 'context/ThemeContext';
 import { PrismicProvider } from '@prismicio/react';
 import { client } from './services/prismic';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <ThemeContextProvider>
-        <PrismicProvider client={client}>
-          <App />
-        </PrismicProvider>
-      </ThemeContextProvider>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <ThemeContextProvider>
+          <PrismicProvider client={client}>
+            <App />
+          </PrismicProvider>
+        </ThemeContextProvider>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );

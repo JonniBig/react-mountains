@@ -30,6 +30,19 @@ export const StyledUserMenu = styled.div`
       opacity: 1;
     }
   }
+
+  .userAvatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    text-align: left;
+  }
+
+  .logoutBtn {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+  }
   .userMenu {
     background-color: transparent;
     border-radius: 4px;
@@ -41,11 +54,11 @@ export const StyledUserMenu = styled.div`
     justify-content: center;
     gap: 12px;
     transition: all 0.3s;
-
-    filter: drop-shadow(0px 0px 2px var(--primary-background-color-grey));
-    &:hover,
-    &:focus {
-      filter: drop-shadow(0px 0px 2px #3f3d3d);
-    }
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  .userMenu:hover {
+    box-shadow: rgb(136 138 136 / 57%) 3px 3px 6px 0px inset,
+      rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
   }
 `;

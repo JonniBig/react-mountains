@@ -1,21 +1,26 @@
 import React from 'react';
 import { StyledGallery, StyledGalleryCarousel } from './Gallery.styled';
+import * as prismicH from '@prismicio/helpers';
+import { useAllPrismicDocumentsByType } from '@prismicio/react';
 
-// import ScrollCarousel from 'scroll-carousel-react';
-import { mountains } from 'db/data';
 const Gallery = () => {
+  const [documents] = useAllPrismicDocumentsByType('mountain-routes');
+
+  const cards = documents?.map(doc => doc.data.mountain_card?.[0]) ?? [];
+  console.log('cards: ', cards);
+  if (cards.length === 0) return null;
   return (
     <StyledGallery>
       <StyledGalleryCarousel autoplaySpeed={2} speed={8}>
-        {mountains.map(mount => (
-          <div key={mount.mountainName} className="galleryItem">
-            <img
-              className="galleryItemImg"
-              src={mount.thumbs[0]}
-              alt={mount.mountainName}
-            />
-          </div>
-        ))}
+        {cards.map(mount => {
+          const title = prismicH.asText(mount.card_title);
+          const thumb = mount.card_img.url;
+          return (
+            <div key={title} className="galleryItem">
+              <img className="galleryItemImg" src={thumb} alt={title} />
+            </div>
+          );
+        })}
       </StyledGalleryCarousel>
     </StyledGallery>
   );

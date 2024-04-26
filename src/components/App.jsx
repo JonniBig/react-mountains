@@ -13,14 +13,29 @@ import NotFound from 'pages/NotFound';
 import MountDetails from 'pages/MountDetails/MountDetails';
 import Register from 'pages/Register/Register';
 import Login from 'pages/Login/Login';
+import RestrictedRoute from './RestrictedRoute/RestrictedRoute';
 
 export const App = () => {
   return (
     <Layout>
       <Routes>
         <Route path={HOME_ROUTE} element={<Home />} />
-        <Route path={REGISTER_ROUTE} element={<Register />} />
-        <Route path={LOGIN_ROUTE} element={<Login />} />
+        <Route
+          path={REGISTER_ROUTE}
+          element={
+            <RestrictedRoute>
+              <Register />
+            </RestrictedRoute>
+          }
+        />
+        <Route
+          path={LOGIN_ROUTE}
+          element={
+            <RestrictedRoute>
+              <Login />
+            </RestrictedRoute>
+          }
+        />
 
         <Route
           path={`${MOUNTAIN_ROUTE}/:mountainName`}
