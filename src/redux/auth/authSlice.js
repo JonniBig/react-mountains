@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { app, auth } from 'auth/base';
 import {
+  GithubAuthProvider,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   getAuth,
@@ -35,6 +36,30 @@ export const registerThunkWithGoogle = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const provider = new GoogleAuthProvider();
+
+      const response = await signInWithPopup(auth, provider);
+
+      const user = response.user;
+      console.log('user: ', user);
+      const serializableUserData = {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+      };
+      console.log('serializableUserData: ', serializableUserData);
+      return serializableUserData;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const registerThunkWithGithub = createAsyncThunk(
+  'auth/registerWithGithub',
+  async (_, thunkAPI) => {
+    try {
+      const provider = new GithubAuthProvider();
 
       const response = await signInWithPopup(auth, provider);
 
@@ -102,6 +127,11 @@ const authSlice = createSlice({
         state.authenticated = true;
         state.user = action.payload;
       })
+      .addCase(registerThunkWithGithub.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.authenticated = true;
+        state.user = action.payload;
+      })
       .addCase(logoutThunk.fulfilled, () => {
         return INITIAL_STATE;
       })
@@ -110,7 +140,8 @@ const authSlice = createSlice({
         isAnyOf(
           registerThunk.pending,
           registerThunkWithGoogle.pending,
-          logoutThunk.pending
+          logoutThunk.pending,
+          registerThunkWithGithub.pending
         ),
         state => {
           state.isLoading = true;
@@ -121,7 +152,8 @@ const authSlice = createSlice({
         isAnyOf(
           registerThunk.rejected,
           registerThunkWithGoogle.rejected,
-          logoutThunk.rejected
+          logoutThunk.rejected,
+          registerThunkWithGithub.rejected
         ),
         (state, action) => {
           state.isLoading = false;

@@ -23,6 +23,7 @@ body.light {
     rgba(255, 255, 255, 0.5),
     rgba(255, 255, 255, 0.5)
   );
+  --mobile-menu-background-color: linear-gradient(#e0efff, #e0efff);
   --primary-background-color-grey: #c0c0c0;
   --primary-background-color-transparent: rgba(255, 255, 255, 0.15);
   --primary-background-color-lightgrey: linear-gradient(
@@ -42,6 +43,8 @@ body.dark {
     rgba(11, 18, 13, 1) 100%
   );
   --primary-title-color: #998700;
+  --mobile-menu-background-color: linear-gradient(#184574, #184574);
+
   --hero-section-gradient: linear-gradient(
     rgba(255, 255, 255, 0),
     rgba(255, 255, 255, 0)

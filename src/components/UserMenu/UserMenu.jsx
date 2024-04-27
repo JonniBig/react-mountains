@@ -9,6 +9,7 @@ import {
   selectAuthUser,
 } from '../../redux/auth/authSelectors';
 import { logoutThunk } from '../../redux/auth/authSlice';
+import toast from 'react-hot-toast';
 
 const UserMenu = () => {
   const location = useLocation();
@@ -45,7 +46,11 @@ const UserMenu = () => {
     };
   }, [isMenuOpen]);
   const onLogout = () => {
-    dispatch(logoutThunk());
+    dispatch(logoutThunk())
+      .unwrap()
+      .then(() => {
+        toast.success('Ви вийшли з акаунту');
+      });
   };
 
   return (

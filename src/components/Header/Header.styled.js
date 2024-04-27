@@ -61,7 +61,7 @@ export const StyledHeader = styled.header`
 `;
 
 export const StyledMobileMenu = styled.div`
-  background-image: url(${imgMobMenu}), var(--hero-section-gradient);
+  background-image: url(${imgMobMenu}), var(--mobile-menu-background-color);
   background-position: center top;
   background-repeat: no-repeat;
   background-size: cover;

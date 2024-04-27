@@ -8,7 +8,7 @@ export const StyledMountDetails = styled.div`
   background-position: center top;
   background-repeat: no-repeat;
   background-size: cover;
-  min-height: 100vh;
+  min-height: 140vh;
   padding-top: 30px;
   .gallery {
     padding: 70px 20px;
@@ -38,7 +38,8 @@ export const StyledMountDetails = styled.div`
   .image-gallery-thumbnail .image-gallery-thumbnail-image {
     width: 100%;
     height: 100%;
-    max-height: 57px;
+    max-height: 51px;
+    overflow: hidden;
     object-fit: cover;
     object-position: center;
   }

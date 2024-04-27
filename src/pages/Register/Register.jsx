@@ -1,19 +1,20 @@
 import React from 'react';
 import { StyledRegisterPage } from './Register.styled';
 import Section from 'components/Section/Section';
-import {
-  GithubAuthProvider,
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-} from 'firebase/auth';
-import { auth } from 'auth/base';
 import { useForm } from 'react-hook-form';
 
 import { ReactComponent as IconGoogle } from 'assets/images/socialMedia/google.svg';
 import { ReactComponent as IconApple } from 'assets/images/socialMedia/apple.svg';
 import { ReactComponent as IconGit } from 'assets/images/socialMedia/git.svg';
-import { useDispatch } from 'react-redux';
-import { registerThunkWithGoogle } from '../../redux/auth/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  registerThunk,
+  registerThunkWithGithub,
+  registerThunkWithGoogle,
+} from '../../redux/auth/authSlice';
+import { selectAuthIsLoading } from '../../redux/auth/authSelectors';
+import toast from 'react-hot-toast';
+import { errorHandler } from 'constants/errorCodes';
 
 const Register = () => {
   const {
@@ -24,33 +25,33 @@ const Register = () => {
 
   const dispatch = useDispatch();
 
+  const isLoading = useSelector(selectAuthIsLoading);
+
   const onSubmit = async data => {
-    const response = await createUserWithEmailAndPassword(
-      auth,
-      data.email,
-      data.password
-    );
-    const user = response.user;
-    const serializableUserData = {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-    };
-    console.log('serializableUserData: ', serializableUserData);
+    dispatch(registerThunk(data))
+      .unwrap()
+      .then(() => {
+        toast.success('Реєстрація пройшла успішно!');
+      })
+      .catch(errorHandler);
   };
 
   const onGoogleLogin = async () => {
-    dispatch(registerThunkWithGoogle());
+    dispatch(registerThunkWithGoogle())
+      .unwrap()
+      .then(() => {
+        toast.success('Реєстрація пройшла успішно!');
+      })
+      .catch(errorHandler);
   };
 
   const onGithubLogin = async () => {
-    const provider = new GithubAuthProvider();
-    try {
-      const result = await signInWithPopup(auth, provider);
-      console.log('result: ', result.user);
-    } catch (error) {
-      console.log('error: ', error);
-    }
+    dispatch(registerThunkWithGithub())
+      .unwrap()
+      .then(() => {
+        toast.success('Реєстрація пройшла успішно!');
+      })
+      .catch(errorHandler);
   };
 
   return (
@@ -64,7 +65,9 @@ const Register = () => {
               type="text"
               {...register('name', { required: true })}
             />
-            {errors.name && <span>This field is required</span>}
+            {errors.name && (
+              <span className="formErr">This field is required</span>
+            )}
           </label>
           <label className="formLabel">
             <input
@@ -73,7 +76,9 @@ const Register = () => {
               type="email"
               {...register('email', { required: true })}
             />
-            {errors.email && <span>This field is required</span>}
+            {errors.email && (
+              <span className="formErr">This field is required</span>
+            )}
           </label>
           <label className="formLabel">
             <input
@@ -82,27 +87,31 @@ const Register = () => {
               type="password"
               {...register('password', { required: true })}
             />
-            {errors.password && <span>This field is required</span>}
+            {errors.password && (
+              <span className="formErr">This field is required</span>
+            )}
           </label>
-          <button className="formSubmitBtn" type="submit">
-            Зареєструватися
+          <button className="formSubmitBtn" type="submit" disabled={isLoading}>
+            {isLoading ? <span className="loader" /> : 'Зареєструватися'}
           </button>
           <div className="socialBtnContainer">
             <button
               className="socialLogin"
               type="button"
               onClick={onGoogleLogin}
+              disabled={isLoading}
             >
               <IconGoogle />
             </button>
 
-            <button className="socialLogin" type="button">
+            <button className="socialLogin" type="button" disabled={isLoading}>
               <IconApple />
             </button>
             <button
               className="socialLogin"
               type="button"
               onClick={onGithubLogin}
+              disabled={isLoading}
             >
               <IconGit />
             </button>

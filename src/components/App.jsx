@@ -14,6 +14,7 @@ import MountDetails from 'pages/MountDetails/MountDetails';
 import Register from 'pages/Register/Register';
 import Login from 'pages/Login/Login';
 import RestrictedRoute from './RestrictedRoute/RestrictedRoute';
+import { Toaster } from 'react-hot-toast';
 
 export const App = () => {
   return (
@@ -44,6 +45,7 @@ export const App = () => {
         <Route path="*" element={<NotFound />} />
       </Routes>
       <ScrollToTopButton />
+      <Toaster position="top-center" reverseOrder={false} />
     </Layout>
   );
 };
