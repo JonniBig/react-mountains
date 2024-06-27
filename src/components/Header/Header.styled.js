@@ -76,6 +76,9 @@ export const StyledMobileMenu = styled.div`
   transition: all 0.3s;
   &.open {
     transform: translateX(0);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   .btnClose {
     position: absolute;
@@ -107,5 +110,12 @@ export const StyledMobileMenu = styled.div`
   .mobileNavlink:hover {
     box-shadow: rgb(136 138 136 / 57%) 3px 3px 6px 0px inset,
       rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+  }
+  .loginBtn {
+    margin-bottom: 30vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
   }
 `;

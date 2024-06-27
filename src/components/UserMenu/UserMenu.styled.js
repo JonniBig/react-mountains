@@ -8,7 +8,8 @@ export const StyledUserMenu = styled.div`
     right: 0;
     display: flex;
     flex-direction: column;
-    width: 120px;
+    align-items: start;
+    width: 130px;
     gap: 15px;
     background-color: #fff;
     padding: 15px;

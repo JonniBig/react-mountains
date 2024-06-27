@@ -7,7 +7,7 @@ const Gallery = () => {
   const [documents] = useAllPrismicDocumentsByType('mountain-routes');
 
   const cards = documents?.map(doc => doc.data.mountain_card?.[0]) ?? [];
-  console.log('cards: ', cards);
+
   if (cards.length === 0) return null;
   return (
     <StyledGallery>

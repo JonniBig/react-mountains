@@ -4,7 +4,12 @@ import { StyledHeader, StyledMobileMenu } from './Header.styled';
 import imgLogo from '../../assets/images/logo-mountain-48.png';
 import { ReactComponent as IconClose } from 'assets/images/close.svg';
 import { ReactComponent as IconBurger } from 'assets/images/burger.svg';
-import { HOME_ROUTE } from 'constants/routes';
+import {
+  ADD_GUEST_ROUTE,
+  HOME_ROUTE,
+  LOGIN_ROUTE,
+  REGISTER_ROUTE,
+} from 'constants/routes';
 import ThemeSwitcher from 'components/ThemeSwitcher/ThemeSwitcher';
 import UserMenu from 'components/UserMenu/UserMenu';
 
@@ -58,6 +63,9 @@ const Header = () => {
               Галерея
             </a>
           )}
+          <NavLink className="navlink" to={ADD_GUEST_ROUTE}>
+            Додати
+          </NavLink>
           <UserMenu />
         </nav>
         <button type="button" className="btnBurger" onClick={onToggleMenu}>
@@ -98,6 +106,18 @@ const MobileMenu = ({ isOpen, onToggleMenu }) => {
             Маршрути
           </a>
         )}
+
+        <NavLink className="mobileNavlink" to={ADD_GUEST_ROUTE}>
+          Додати
+        </NavLink>
+      </div>
+      <div className="loginBtn">
+        <Link className="mobileNavlink" to={LOGIN_ROUTE}>
+          Вхід
+        </Link>
+        <Link className="mobileNavlink" to={REGISTER_ROUTE}>
+          Реєстрація
+        </Link>
       </div>
     </StyledMobileMenu>
   );

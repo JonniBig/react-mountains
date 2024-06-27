@@ -10,6 +10,7 @@ import {
 } from '../../redux/auth/authSelectors';
 import { logoutThunk } from '../../redux/auth/authSlice';
 import toast from 'react-hot-toast';
+import { UserSetiings } from 'components/UserSettings/UserSetiings';
 
 const UserMenu = () => {
   const location = useLocation();
@@ -17,6 +18,7 @@ const UserMenu = () => {
   const authenticated = useSelector(selectAuthAuthenticated);
   const user = useSelector(selectAuthUser);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
 
   const menuRef = useRef();
@@ -24,6 +26,13 @@ const UserMenu = () => {
 
   const onToggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const onOpenModal = () => {
+    setIsModalOpen(true);
+  };
+  const onCloseModal = () => {
+    setIsModalOpen(false);
   };
 
   useEffect(() => {
@@ -65,7 +74,7 @@ const UserMenu = () => {
           <img
             className="userAvatar"
             src={user.photoURL}
-            alt={user.displayname}
+            alt={user.displayName}
           />
         ) : (
           <UserIcon />
@@ -74,6 +83,9 @@ const UserMenu = () => {
       {isMenuOpen &&
         (authenticated ? (
           <div className="menu" ref={menuRef}>
+            <button type="button" className="logoutBtn" onClick={onOpenModal}>
+              Налаштування
+            </button>
             <button type="button" className="logoutBtn" onClick={onLogout}>
               Вихід
             </button>
@@ -84,6 +96,7 @@ const UserMenu = () => {
             <Link to={REGISTER_ROUTE}>Реєстрація</Link>
           </div>
         ))}
+      {isModalOpen && <UserSetiings onCloseModal={onCloseModal} />}
     </StyledUserMenu>
   );
 };

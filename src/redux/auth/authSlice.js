@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
-import { app, auth } from 'auth/base';
+import { auth, db } from 'auth/base';
 import {
   GithubAuthProvider,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
-  getAuth,
   signInWithPopup,
 } from 'firebase/auth';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 export const registerThunk = createAsyncThunk(
   'auth/register',
@@ -23,6 +23,8 @@ export const registerThunk = createAsyncThunk(
         email: user.email,
         displayName: user.displayName,
       };
+      await setDoc(doc(db, 'users', user.uid), serializableUserData);
+
       console.log('serializableUserData: ', serializableUserData);
       return serializableUserData;
     } catch (error) {
@@ -40,14 +42,28 @@ export const registerThunkWithGoogle = createAsyncThunk(
       const response = await signInWithPopup(auth, provider);
 
       const user = response.user;
-      console.log('user: ', user);
+
+      const userSnapshot = await getDoc(doc(db, 'users', user.uid));
+
+      if (userSnapshot.exists()) {
+        const userData = userSnapshot.data();
+        const serializableUserData = {
+          uid: userData.uid,
+          email: userData.email,
+          displayName: userData.displayName,
+          photoURL: userData.photoURL,
+        };
+        return serializableUserData;
+      }
+
       const serializableUserData = {
         uid: user.uid,
         email: user.email,
         displayName: user.displayName,
         photoURL: user.photoURL,
       };
-      console.log('serializableUserData: ', serializableUserData);
+
+      await setDoc(doc(db, 'users', user.uid), serializableUserData);
       return serializableUserData;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -64,13 +80,27 @@ export const registerThunkWithGithub = createAsyncThunk(
       const response = await signInWithPopup(auth, provider);
 
       const user = response.user;
-      console.log('user: ', user);
+
+      const userSnapshot = await getDoc(doc(db, 'users', user.uid));
+
+      if (userSnapshot.exists()) {
+        const userData = userSnapshot.data();
+        const serializableUserData = {
+          uid: userData.uid,
+          email: userData.email,
+          displayName: userData.displayName,
+          photoURL: userData.photoURL,
+        };
+        return serializableUserData;
+      }
+
       const serializableUserData = {
         uid: user.uid,
         email: user.email,
         displayName: user.displayName,
         photoURL: user.photoURL,
       };
+      await setDoc(doc(db, 'users', user.uid), serializableUserData);
       console.log('serializableUserData: ', serializableUserData);
       return serializableUserData;
     } catch (error) {
@@ -85,7 +115,7 @@ export const logoutThunk = createAsyncThunk(
     try {
       await new Promise((resolve, reject) => {
         try {
-          getAuth(app).signOut();
+          auth.signOut();
           resolve();
         } catch (error) {
           reject(error);
@@ -114,6 +144,12 @@ const authSlice = createSlice({
   name: 'auth',
 
   initialState: INITIAL_STATE,
+  reducers: {
+    setAuthenticated: (state, action) => {
+      state.authenticated = true;
+      state.user = action.payload;
+    },
+  },
   extraReducers: builder =>
     builder
 
@@ -162,4 +198,5 @@ const authSlice = createSlice({
       ),
 });
 
+export const { setAuthenticated } = authSlice.actions;
 export const authReducer = authSlice.reducer;
