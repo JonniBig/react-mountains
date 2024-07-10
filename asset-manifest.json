@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.be6e1b06.css",
-    "main.js": "/static/js/main.7f580b12.js",
+    "main.css": "/static/css/main.49ea1265.css",
+    "main.js": "/static/js/main.ca3180df.js",
     "static/js/879.e4994930.chunk.js": "/static/js/879.e4994930.chunk.js",
     "static/media/IMG_2601.webp": "/static/media/IMG_2601.b470b2de786cacda29db.webp",
     "static/media/IMG_4042.webp": "/static/media/IMG_4042.bd3cce2a7b94b40ea949.webp",
@@ -10,16 +10,15 @@
     "static/media/close.svg": "/static/media/close.e6ea2df3a9d7f09769ee8ab9d1807a64.svg",
     "static/media/burger.svg": "/static/media/burger.5cefb62eee8bff93fe630f4c012386a5.svg",
     "static/media/git.svg": "/static/media/git.357ca9f5be60a1d44724542d8bac3106.svg",
-    "static/media/apple.svg": "/static/media/apple.5855702e3830e546a2b5ada40248c4a1.svg",
     "static/media/user.svg": "/static/media/user.f47534ba1fda6660b822d6b1680086b8.svg",
     "static/media/google.svg": "/static/media/google.60da0f8bc230765253c2badfc8507f65.svg",
     "static/media/closeModal.svg": "/static/media/closeModal.59a0bca67bd00a18d4e0b6c58df4c4ee.svg",
-    "main.be6e1b06.css.map": "/static/css/main.be6e1b06.css.map",
-    "main.7f580b12.js.map": "/static/js/main.7f580b12.js.map",
+    "main.49ea1265.css.map": "/static/css/main.49ea1265.css.map",
+    "main.ca3180df.js.map": "/static/js/main.ca3180df.js.map",
     "879.e4994930.chunk.js.map": "/static/js/879.e4994930.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.be6e1b06.css",
-    "static/js/main.7f580b12.js"
+    "static/css/main.49ea1265.css",
+    "static/js/main.ca3180df.js"
   ]
 }
