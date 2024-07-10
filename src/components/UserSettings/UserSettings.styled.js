@@ -51,4 +51,43 @@ export const StyledUserSettings = styled.div`
     padding: 6px 12px;
     cursor: pointer;
   }
+  .loader {
+    width: 12px;
+    height: 8px;
+    display: block;
+    margin: auto;
+    position: relative;
+    border-radius: 4px;
+    color: #000;
+    background: currentColor;
+    box-sizing: border-box;
+    animation: animloader 0.6s 0.3s ease infinite alternate;
+  }
+  .loader::after,
+  .loader::before {
+    content: '';
+    box-sizing: border-box;
+    width: 12px;
+    height: 8px;
+    background: currentColor;
+    position: absolute;
+    border-radius: 4px;
+    top: 0;
+    right: 110%;
+    animation: animloader 0.6s ease infinite alternate;
+  }
+  .loader::after {
+    left: 110%;
+    right: auto;
+    animation-delay: 0.6s;
+  }
+
+  @keyframes animloader {
+    0% {
+      width: 12px;
+    }
+    100% {
+      width: 30px;
+    }
+  }
 `;

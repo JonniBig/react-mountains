@@ -9,9 +9,6 @@ body {
 }
 :root {
   --footer-height: 37px;
-}
-
-body.light {
   --primary-color-card: #fff;
   --primary-background-color-blue: linear-gradient(
     to left,

@@ -2,36 +2,67 @@ import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { StyledUserSettings } from './UserSettings.styled';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectAuthUser } from '../../redux/auth/authSelectors';
 import { ReactComponent as UserIcon } from 'assets/images/user.svg';
 import { ReactComponent as Close } from 'assets/images/closeModal.svg';
 import { nanoid } from '@reduxjs/toolkit';
 import { auth, db, storage } from 'auth/base';
 import { updateProfile } from 'firebase/auth';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { setAuthenticated } from '../../redux/auth/authSlice';
 
 export const UserSetiings = ({ onCloseModal }) => {
   const user = useSelector(selectAuthUser);
+  const dispatch = useDispatch();
   const [uploadUrl, setUploadUrl] = useState(null);
   const [uploadImage, setUploadImage] = useState(null);
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  const updateUserData = async userObj => {
+    if (userObj === null) return;
+
+    const userSnapshot = await getDoc(doc(db, 'users', userObj.uid));
+
+    if (!userSnapshot.exists()) return;
+
+    const userData = userSnapshot.data();
+
+    const serializableUserData = {
+      uid: userData.uid,
+      email: userData.email,
+      displayName: userData.displayName,
+      photoURL: userData.photoURL,
+    };
+    dispatch(setAuthenticated(serializableUserData));
+  };
+
   const formik = useFormik({
     initialValues: {
       userName: user.displayName,
       userAvatarFile: user.photoURL,
     },
     onSubmit: async values => {
+      setIsUpdating(true);
       const currentUser = auth.currentUser;
       if (!uploadImage) {
         const serializableUserData = {
           displayName: values.userName,
         };
-        await updateDoc(doc(db, 'users', user.uid), serializableUserData);
-        await updateProfile(currentUser, {
-          displayName: values.userName,
-        });
+        // await updateDoc(doc(db, 'users', user.uid), serializableUserData);
+        // await updateProfile(currentUser, {
+        //   displayName: values.userName,
+        // });
 
+        await Promise.all([
+          updateDoc(doc(db, 'users', user.uid), serializableUserData),
+          updateProfile(currentUser, {
+            displayName: values.userName,
+          }),
+        ]);
+        await updateUserData(user);
         onCloseModal();
+        setIsUpdating(false);
         return;
       }
 
@@ -45,6 +76,7 @@ export const UserSetiings = ({ onCloseModal }) => {
 
             const serializableUserData = {
               photoURL: downloadURL,
+              displayName: values.userName,
             };
             await updateDoc(doc(db, 'users', user.uid), serializableUserData);
             await updateProfile(currentUser, {
@@ -59,7 +91,10 @@ export const UserSetiings = ({ onCloseModal }) => {
         });
       });
 
+      await updateUserData(user);
+
       onCloseModal();
+      setIsUpdating(false);
     },
   });
 
@@ -127,8 +162,8 @@ export const UserSetiings = ({ onCloseModal }) => {
             value={formik.values.userName}
           />
         </label>
-        <button type="submit" className="saveBtn">
-          Зберегти
+        <button type="submit" className="saveBtn" disabled={isUpdating}>
+          {isUpdating ? <span className="loader" /> : 'Зберегти'}
         </button>
       </form>
     </StyledUserSettings>

@@ -4,9 +4,39 @@ import {
   GithubAuthProvider,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   signInWithPopup,
 } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
+
+export const loginThunk = createAsyncThunk(
+  'auth/login',
+  async (formData, thunkAPI) => {
+    try {
+      const response = await signInWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+      const user = response.user;
+      const userSnapshot = await getDoc(doc(db, 'users', user.uid));
+      if (!userSnapshot.exists()) {
+        return thunkAPI.rejectWithValue('User not found');
+      }
+      const userData = userSnapshot.data();
+      const serializableUserData = {
+        uid: userData.uid,
+        email: userData.email,
+        displayName: userData.displayName,
+      };
+
+      console.log('serializableUserData: ', serializableUserData);
+      return serializableUserData;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 
 export const registerThunk = createAsyncThunk(
   'auth/register',
@@ -152,7 +182,11 @@ const authSlice = createSlice({
   },
   extraReducers: builder =>
     builder
-
+      .addCase(loginThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.authenticated = true;
+        state.user = action.payload;
+      })
       .addCase(registerThunk.fulfilled, (state, action) => {
         state.isLoading = false;
         state.authenticated = true;
@@ -174,6 +208,7 @@ const authSlice = createSlice({
 
       .addMatcher(
         isAnyOf(
+          loginThunk.pending,
           registerThunk.pending,
           registerThunkWithGoogle.pending,
           logoutThunk.pending,
@@ -186,6 +221,7 @@ const authSlice = createSlice({
       )
       .addMatcher(
         isAnyOf(
+          loginThunk.rejected,
           registerThunk.rejected,
           registerThunkWithGoogle.rejected,
           logoutThunk.rejected,

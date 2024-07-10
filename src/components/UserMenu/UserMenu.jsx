@@ -19,6 +19,8 @@ const UserMenu = () => {
   const user = useSelector(selectAuthUser);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoadedImg, setIsLoadedImg] = useState(false);
+
   const dispatch = useDispatch();
 
   const menuRef = useRef();
@@ -71,11 +73,15 @@ const UserMenu = () => {
         onClick={onToggleMenu}
       >
         {authenticated && user.photoURL ? (
-          <img
-            className="userAvatar"
-            src={user.photoURL}
-            alt={user.displayName}
-          />
+          <>
+            <img
+              onLoad={() => setIsLoadedImg(true)}
+              className={`userAvatar ${isLoadedImg ? 'loaded' : ''}`}
+              src={user.photoURL}
+              alt={user.displayName}
+            />
+            {!isLoadedImg && <UserIcon />}
+          </>
         ) : (
           <UserIcon />
         )}

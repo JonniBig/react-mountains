@@ -12,6 +12,8 @@ import {
 } from 'constants/routes';
 import ThemeSwitcher from 'components/ThemeSwitcher/ThemeSwitcher';
 import UserMenu from 'components/UserMenu/UserMenu';
+import { useSelector } from 'react-redux';
+import { selectAuthAuthenticated } from '../../redux/auth/authSelectors';
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -79,6 +81,8 @@ const Header = () => {
 const MobileMenu = ({ isOpen, onToggleMenu }) => {
   const location = useLocation();
 
+  const isSignedIn = useSelector(selectAuthAuthenticated);
+
   return (
     <StyledMobileMenu className={isOpen ? 'open' : ''}>
       <button type="button" className="btnClose" onClick={onToggleMenu}>
@@ -111,14 +115,26 @@ const MobileMenu = ({ isOpen, onToggleMenu }) => {
           Додати
         </NavLink>
       </div>
-      <div className="loginBtn">
-        <Link className="mobileNavlink" to={LOGIN_ROUTE}>
-          Вхід
-        </Link>
-        <Link className="mobileNavlink" to={REGISTER_ROUTE}>
-          Реєстрація
-        </Link>
-      </div>
+      {!isSignedIn && (
+        <div className="loginBtn">
+          <Link className="mobileNavlink" to={LOGIN_ROUTE}>
+            Вхід
+          </Link>
+          <Link className="mobileNavlink" to={REGISTER_ROUTE}>
+            Реєстрація
+          </Link>
+        </div>
+      )}
+      {isSignedIn && (
+        <div className="loginBtn">
+          <button type="button" className="logoutBtn">
+            Налаштування
+          </button>
+          <button type="button" className="logoutBtn">
+            Вихід
+          </button>
+        </div>
+      )}
     </StyledMobileMenu>
   );
 };

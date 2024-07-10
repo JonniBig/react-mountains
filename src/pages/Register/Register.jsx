@@ -4,7 +4,7 @@ import Section from 'components/Section/Section';
 import { useForm } from 'react-hook-form';
 
 import { ReactComponent as IconGoogle } from 'assets/images/socialMedia/google.svg';
-import { ReactComponent as IconApple } from 'assets/images/socialMedia/apple.svg';
+// import { ReactComponent as IconApple } from 'assets/images/socialMedia/apple.svg';
 import { ReactComponent as IconGit } from 'assets/images/socialMedia/git.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -104,9 +104,9 @@ const Register = () => {
               <IconGoogle />
             </button>
 
-            <button className="socialLogin" type="button" disabled={isLoading}>
+            {/* <button className="socialLogin" type="button" disabled={isLoading}>
               <IconApple />
-            </button>
+            </button> */}
             <button
               className="socialLogin"
               type="button"
