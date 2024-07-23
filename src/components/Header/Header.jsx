@@ -12,10 +12,15 @@ import {
 } from 'constants/routes';
 import ThemeSwitcher from 'components/ThemeSwitcher/ThemeSwitcher';
 import UserMenu from 'components/UserMenu/UserMenu';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectAuthAuthenticated } from '../../redux/auth/authSelectors';
+import MobileUserMenu from 'components/MobileUserMenu/MobileUserMenu';
+import { useMediaQuery } from 'react-responsive';
+import { logoutThunk } from '../../redux/auth/authSlice';
+import toast from 'react-hot-toast';
 
 const Header = () => {
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
@@ -42,6 +47,8 @@ const Header = () => {
         <Link className="logo" to={HOME_ROUTE}>
           <img src={imgLogo} alt="logo" />
         </Link>
+        {isMobile && <MobileUserMenu />}
+
         <ThemeSwitcher />
         <nav className="navigation">
           <NavLink className="navlink" to={HOME_ROUTE}>
@@ -82,6 +89,17 @@ const MobileMenu = ({ isOpen, onToggleMenu }) => {
   const location = useLocation();
 
   const isSignedIn = useSelector(selectAuthAuthenticated);
+
+  const dispatch = useDispatch();
+
+  const onLogout = () => {
+    dispatch(logoutThunk())
+      .unwrap()
+      .then(() => {
+        toast.success('Ви вийшли з акаунту');
+        onToggleMenu();
+      });
+  };
 
   return (
     <StyledMobileMenu className={isOpen ? 'open' : ''}>
@@ -127,10 +145,7 @@ const MobileMenu = ({ isOpen, onToggleMenu }) => {
       )}
       {isSignedIn && (
         <div className="loginBtn">
-          <button type="button" className="logoutBtn">
-            Налаштування
-          </button>
-          <button type="button" className="logoutBtn">
+          <button type="button" className="logoutBtn" onClick={onLogout}>
             Вихід
           </button>
         </div>

@@ -90,4 +90,21 @@ export const StyledUserSettings = styled.div`
       width: 30px;
     }
   }
+
+  .saveBtn {
+    padding: 12px 8px;
+    color: var(--primary-color);
+    border-radius: 4px;
+    border: none;
+    text-decoration: none;
+    transition: all 0.3s;
+    box-shadow: rgb(136 138 136 / 57%) 6px 2px 16px 0px,
+      rgba(255, 255, 255, 0.5) -6px -2px 16px 0px;
+
+    text-align: center;
+  }
+  .saveBtn:hover {
+    box-shadow: rgb(136 138 136 / 57%) 3px 3px 6px 0px inset,
+      rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+  }
 `;

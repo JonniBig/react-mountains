@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 export const StyledThemeSwitcher = styled.div`
-  margin-left: auto;
+  margin-left: 48px;
   margin-right: 20px;
+
   display: flex;
   justify-content: center;
   align-items: center;

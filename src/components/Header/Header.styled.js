@@ -33,7 +33,9 @@ export const StyledHeader = styled.header`
       display: flex;
     }
   }
-
+  .logo {
+    margin-right: auto;
+  }
   .navlink {
     padding: 12px 8px;
     color: var(--primary-color);

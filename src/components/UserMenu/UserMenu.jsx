@@ -1,25 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { StyledUserMenu } from './UserMenu.styled';
 import { LOGIN_ROUTE, REGISTER_ROUTE } from 'constants/routes';
-import { ReactComponent as UserIcon } from 'assets/images/user.svg';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  selectAuthAuthenticated,
-  selectAuthUser,
-} from '../../redux/auth/authSelectors';
+import { selectAuthAuthenticated } from '../../redux/auth/authSelectors';
 import { logoutThunk } from '../../redux/auth/authSlice';
 import toast from 'react-hot-toast';
 import { UserSetiings } from 'components/UserSettings/UserSetiings';
+import UserAvatar from 'components/UserAvater/UserAvatar';
 
 const UserMenu = () => {
   const location = useLocation();
 
   const authenticated = useSelector(selectAuthAuthenticated);
-  const user = useSelector(selectAuthUser);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLoadedImg, setIsLoadedImg] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -72,19 +67,7 @@ const UserMenu = () => {
         type="button"
         onClick={onToggleMenu}
       >
-        {authenticated && user.photoURL ? (
-          <>
-            <img
-              onLoad={() => setIsLoadedImg(true)}
-              className={`userAvatar ${isLoadedImg ? 'loaded' : ''}`}
-              src={user.photoURL}
-              alt={user.displayName}
-            />
-            {!isLoadedImg && <UserIcon />}
-          </>
-        ) : (
-          <UserIcon />
-        )}
+        <UserAvatar />
       </button>
       {isMenuOpen &&
         (authenticated ? (
