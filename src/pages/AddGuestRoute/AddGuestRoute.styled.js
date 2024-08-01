@@ -139,7 +139,7 @@ export const StyledAddRoute = styled.div`
 
   .fileInputWrapper {
     position: relative;
-    overflow: hidden;
+    /* overflow: hidden; */
     display: inline-block;
   }
 

@@ -22,6 +22,7 @@ import { useDispatch } from 'react-redux';
 import { setAuthenticated } from '../redux/auth/authSlice';
 import AddGuestRoute from 'pages/AddGuestRoute/AddGuestRoute';
 import { doc, getDoc } from 'firebase/firestore';
+import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -59,6 +60,7 @@ export const App = () => {
             </RestrictedRoute>
           }
         />
+
         <Route
           path={LOGIN_ROUTE}
           element={
@@ -67,7 +69,14 @@ export const App = () => {
             </RestrictedRoute>
           }
         />
-        <Route path={ADD_GUEST_ROUTE} element={<AddGuestRoute />} />
+        <Route
+          path={ADD_GUEST_ROUTE}
+          element={
+            <ProtectedRoute>
+              <AddGuestRoute />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path={`${MOUNTAIN_ROUTE}/:mountainName`}
           element={<MountDetails />}

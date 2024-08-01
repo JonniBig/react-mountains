@@ -23,6 +23,7 @@ const Header = () => {
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const isSignedIn = useSelector(selectAuthAuthenticated);
 
   const onToggleMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -72,9 +73,21 @@ const Header = () => {
               Галерея
             </a>
           )}
-          <NavLink className="navlink" to={ADD_GUEST_ROUTE}>
-            Додати
-          </NavLink>
+          {location.pathname !== HOME_ROUTE ? (
+            <Link className="navlink" to="/#guestRoutes">
+              Стежки
+            </Link>
+          ) : (
+            <a onClick={onToggleMenu} className="navlink" href="#guestRoutes">
+              Стежки
+            </a>
+          )}
+
+          {isSignedIn && (
+            <NavLink className="navlink" to={ADD_GUEST_ROUTE}>
+              Додати
+            </NavLink>
+          )}
           <UserMenu />
         </nav>
         <button type="button" className="btnBurger" onClick={onToggleMenu}>
@@ -128,10 +141,24 @@ const MobileMenu = ({ isOpen, onToggleMenu }) => {
             Маршрути
           </a>
         )}
-
-        <NavLink className="mobileNavlink" to={ADD_GUEST_ROUTE}>
-          Додати
-        </NavLink>
+        {location.pathname !== HOME_ROUTE ? (
+          <Link className="mobileNavlink" to="/#guestRoutes">
+            Стежки
+          </Link>
+        ) : (
+          <a
+            onClick={onToggleMenu}
+            className="mobileNavlink"
+            href="#guestRoutes"
+          >
+            Стежки
+          </a>
+        )}
+        {isSignedIn && (
+          <NavLink className="mobileNavlink" to={ADD_GUEST_ROUTE}>
+            Додати
+          </NavLink>
+        )}
       </div>
       {!isSignedIn && (
         <div className="loginBtn">
@@ -143,6 +170,7 @@ const MobileMenu = ({ isOpen, onToggleMenu }) => {
           </Link>
         </div>
       )}
+
       {isSignedIn && (
         <div className="loginBtn">
           <button type="button" className="logoutBtn" onClick={onLogout}>

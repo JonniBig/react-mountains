@@ -16,12 +16,15 @@ import { useContext, useEffect, useRef } from 'react';
 import * as prismicH from '@prismicio/helpers';
 import { useAllPrismicDocumentsByType } from '@prismicio/react';
 import { useLocation } from 'react-router-dom';
+import GuestRoutes from 'components/GuestRoutes/GuesRoutes';
 
 const Home = () => {
   const { theme } = useContext(themeContext);
   const [documents] = useAllPrismicDocumentsByType('mountain-routes');
   const galleryRef = useRef();
   const routesRef = useRef();
+  const guestRoutesRef = useRef();
+
   const location = useLocation();
 
   useEffect(() => {
@@ -34,6 +37,12 @@ const Home = () => {
     }
     if (location.hash === '#routes') {
       routesRef.current.scrollIntoView({
+        behavior: 'smooth',
+        alignToTop: true,
+      });
+    }
+    if (location.hash === '#guestRoutes') {
+      guestRoutesRef.current.scrollIntoView({
         behavior: 'smooth',
         alignToTop: true,
       });
@@ -163,6 +172,19 @@ const Home = () => {
             );
           })}
         </Swiper>
+      </StyledCardSection>
+      <StyledCardSection
+        ref={guestRoutesRef}
+        title="Стежки Гостей"
+        id="guestRoutes"
+      >
+        <p className="text">
+          Вершини Карпат чекають на вас! Вирушайте разом з нами в незабутні
+          подорожі по наших туристичних маршрутах серед чарівних лісів,
+          кришталевих потоків і високогірних панорам. Відчуйте дух пригоди у
+          серці Карпат!
+        </p>
+        <GuestRoutes />
       </StyledCardSection>
     </div>
   );
