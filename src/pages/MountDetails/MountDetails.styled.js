@@ -18,6 +18,7 @@ export const StyledMountDetails = styled.div`
     gap: 30px;
     justify-content: center;
     margin-bottom: 35px;
+    flex-direction: column;
   }
   .titleImg {
     width: 350px;

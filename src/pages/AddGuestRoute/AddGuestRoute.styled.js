@@ -12,7 +12,16 @@ export const StyledAddRoute = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
 
+  .error {
+    color: red;
+  }
   .title {
+    font-weight: 900;
+    font-size: 36px;
+    margin-bottom: 50px;
+  }
+  .labelSpan {
+    font-size: 18px;
     font-weight: 700;
   }
   .form {
@@ -21,11 +30,11 @@ export const StyledAddRoute = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px 30px 20px;
     height: calc(100% - 100px);
     max-height: 100%;
     max-width: 1280px;
     margin: 0 auto;
+    gap: 30px;
     padding: 30px 12px;
     background-color: ${props =>
       props.$theme === 'light'
@@ -38,41 +47,55 @@ export const StyledAddRoute = styled.div`
         : '0 4px 8px rgba(0, 0, 0, 0.3)'};
   }
 
-  input[type='file'] {
-    max-width: 137px;
+  input[type='text'] {
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: black 1px solid;
-    background-color: transparent;
-    padding: 12px 8px;
-    color: var(--primary-color);
-    letter-spacing: 0.025em;
-    font-weight: 600;
+    padding: 10px;
+    margin: 0;
+    box-sizing: border-box;
+    border: none;
     border-radius: 4px;
-    text-decoration: none;
-    transition: all 0.3s;
-    box-shadow: rgb(136 138 136 / 57%) 6px 2px 16px 0px,
-      rgba(255, 255, 255, 0.5) -6px -2px 16px 0px;
+    font-size: 16px;
+    opacity: 0.8;
+    background-color: rgba(255, 255, 255, 0.5);
   }
 
-  input[type='file']:hover {
-    box-shadow: rgb(136 138 136 / 57%) 3px 3px 6px 0px inset,
-      rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+  input[type='text']:focus {
+    border-color: #4caf50;
+    outline: none;
+    opacity: 0.9;
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
   }
+
   .labelSection {
     display: grid;
     grid-template-columns: 1fr;
     justify-content: center;
     align-items: center;
-    gap: 80px;
+    gap: 50px;
     width: 100%;
+  }
+  .labelInput {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    justify-content: space-between;
+  }
+  .labelInputShort {
+    margin-top: -38px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    justify-content: space-between;
+    max-width: 177px;
+  }
+  .labelBtn {
+    max-width: 177px;
   }
   .shortDescription {
     display: flex;
-    flex-direction: row;
-    gap: 30px;
+    flex-direction: column;
+    gap: 12px;
   }
   .addRouteBtn {
     max-width: 137px;
@@ -139,12 +162,11 @@ export const StyledAddRoute = styled.div`
 
   .fileInputWrapper {
     position: relative;
-    /* overflow: hidden; */
     display: inline-block;
+    max-width: 177px;
   }
 
   .fileInputWrapper input[type='file'] {
-    /* font-size: 100px; */
     position: absolute;
     left: 0;
     top: 0;
@@ -159,6 +181,7 @@ export const StyledAddRoute = styled.div`
     border: none;
     background-color: transparent;
     padding: 12px 8px;
+    gap: 4px;
     color: var(--primary-color);
     border-radius: 4px;
     text-decoration: none;
@@ -169,5 +192,26 @@ export const StyledAddRoute = styled.div`
   .fileInputButton:hover {
     box-shadow: rgb(136 138 136 / 57%) 3px 3px 6px 0px inset,
       rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+  }
+  textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    line-height: 1.5;
+    resize: vertical;
+    opacity: 0.8;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+
+  textarea:focus {
+    border-color: #4caf50;
+    outline: none;
+    opacity: 0.9;
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
   }
 `;

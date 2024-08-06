@@ -10,16 +10,16 @@ import { db } from 'auth/base';
 import Card from 'components/Card/Card';
 
 const GuestRoutes = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
+      // setIsLoading(true);
       const guestRoutesSnapshot = await getDocs(collection(db, 'guestRoutes'));
       const guestRoutes = guestRoutesSnapshot.docs.map(doc => doc.data());
       console.log('guestRoutes: ', guestRoutes);
-      setIsLoading(false);
+      // setIsLoading(false);
       setCards(guestRoutes);
     };
     fetchData();
@@ -86,6 +86,7 @@ const GuestRoutes = () => {
               title={title}
               thumbs={thumb}
               description={description}
+              isGuestRoute={true}
             />
           </SwiperSlide>
         );

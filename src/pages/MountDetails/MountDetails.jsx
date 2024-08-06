@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import ReactImageGallery from 'react-image-gallery';
 import { useParams } from 'react-router-dom';
-import { StyledMountDetails } from './styled';
+import { StyledMountDetails } from './MountDetails.styled';
 import { usePrismicDocumentByUID } from '@prismicio/react';
 import * as prismicH from '@prismicio/helpers';
 import MyLoader from 'components/Loader/Loader';

@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import Layout from './Layout/Layout';
 import {
   ADD_GUEST_ROUTE,
+  GUEST_ROUTE,
   HOME_ROUTE,
   LOGIN_ROUTE,
   MOUNTAIN_ROUTE,
@@ -23,6 +24,7 @@ import { setAuthenticated } from '../redux/auth/authSlice';
 import AddGuestRoute from 'pages/AddGuestRoute/AddGuestRoute';
 import { doc, getDoc } from 'firebase/firestore';
 import ProtectedRoute from './ProtectedRoute/ProtectedRoute';
+import GuestRouteDetails from 'pages/GuestRouteDetails/GuestRouteDetails';
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -80,6 +82,10 @@ export const App = () => {
         <Route
           path={`${MOUNTAIN_ROUTE}/:mountainName`}
           element={<MountDetails />}
+        />
+        <Route
+          path={`${GUEST_ROUTE}/:mountainName`}
+          element={<GuestRouteDetails />}
         />
         <Route path="*" element={<NotFound />} />
       </Routes>

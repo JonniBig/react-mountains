@@ -13,10 +13,15 @@ import { addDoc, collection } from 'firebase/firestore';
 import { uploadFiles } from 'utils/uploadFiles';
 import { ReactComponent as UploadIcon } from 'assets/images/upload.svg';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import { GUEST_ROUTE } from 'constants/routes';
 
 const validationSchema = Yup.object().shape({
   routeName: Yup.string().required("Назва маршруту є обов'язковою"),
-  shortDescription: Yup.string().required("Короткий опис є обов'язковим"),
+  shortDescription: Yup.string()
+    .required("Короткий опис є обов'язковим")
+    .min(60, 'Довжина має бути більше 60 символів')
+    .max(120, 'Довжина має бути менше 120 символів'),
   photoCardImg: Yup.mixed()
     .required("Фотокартка є обов'язковою")
     .test(
@@ -63,7 +68,7 @@ const AddGuestRoute = () => {
   const { theme } = useContext(themeContext);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const user = useSelector(selectAuthUser);
-
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -138,10 +143,12 @@ const AddGuestRoute = () => {
         photoCardImg: photoCardImgDownloadURL,
         gallery: galleryImgs,
         userUid: user.uid,
+        publicationDate: new Date().toISOString().slice(0, 10),
       };
 
       await addDoc(collection(db, 'guestRoutes'), finalRouteData);
       toast.success('Маршрут додано успішно!');
+      navigate(`${GUEST_ROUTE}/${routeName}`);
     } catch (error) {
       console.log('error: ', error);
     } finally {
@@ -155,92 +162,123 @@ const AddGuestRoute = () => {
         <h2 className="title">Додай свій маршрут</h2>
         <div className="labelSection">
           <label>
-            <span>Назва маршруту</span>
-            <input type="text" {...register('routeName')} id="routeName" />
-            {errors.routeName && <p>{errors.routeName.message}</p>}
+            <div className="labelInput">
+              <span className="labelSpan">Назва маршруту (гори)</span>
+              <input
+                type="text"
+                {...register('routeName')}
+                id="routeName"
+                maxLength="30"
+              />
+              {errors.routeName && (
+                <p className="error">{errors.routeName.message}</p>
+              )}
+            </div>
           </label>
           <label className="shortDescription">
-            <span>Короткий опис маршруту та фотокартка</span>
-            <input
-              type="text"
-              {...register('shortDescription')}
-              id="shortDescription"
-            />
+            <div className="labelInput">
+              <span className="labelSpan">
+                Короткий опис маршруту та фотокартка
+              </span>
+              <input
+                type="text"
+                {...register('shortDescription')}
+                id="shortDescription"
+              />
+            </div>
             {errors.shortDescription && (
-              <p>{errors.shortDescription.message}</p>
+              <p className="error">{errors.shortDescription.message}</p>
             )}
-            <Controller
-              control={control}
-              name={'photoCardImg'}
-              render={({ field: { value, onChange, ...field } }) => (
-                <div className="fileInputWrapper">
-                  <button type="button" className="fileInputButton">
-                    <input
-                      {...field}
-                      onChange={event => onChange(event.target.files[0])}
-                      type="file"
-                    />{' '}
-                    Вибрати файл
-                    <UploadIcon />
-                  </button>
-                  {errors.photoCardImg && <p>{errors.photoCardImg.message}</p>}
-                </div>
-              )}
-            />
+          </label>
+          <label className="labelBtn">
+            <div className="labelInputShort">
+              <Controller
+                control={control}
+                name={'photoCardImg'}
+                render={({ field: { value, onChange, ...field } }) => (
+                  <div className="fileInputWrapper">
+                    <button type="button" className="fileInputButton">
+                      <input
+                        {...field}
+                        onChange={event => onChange(event.target.files[0])}
+                        type="file"
+                      />
+                      Вибрати файл
+                      <UploadIcon />
+                    </button>
+                    {errors.photoCardImg && (
+                      <p className="error">{errors.photoCardImg.message}</p>
+                    )}
+                  </div>
+                )}
+              />
+            </div>
+          </label>
+          <label className="labelBtn">
+            <div className="labelInput">
+              <span className="labelSpan">Фонове зображення</span>
+              <Controller
+                control={control}
+                name={'backgroundImg'}
+                render={({ field: { value, onChange, ...field } }) => (
+                  <div className="fileInputWrapper">
+                    <button type="button" className="fileInputButton">
+                      <input
+                        {...field}
+                        onChange={event => onChange(event.target.files[0])}
+                        type="file"
+                      />
+                      Вибрати файл
+                      <UploadIcon />
+                    </button>
+                    {errors.backgroundImg && (
+                      <p className="error">{errors.backgroundImg.message}</p>
+                    )}
+                  </div>
+                )}
+              />
+            </div>
           </label>
           <label>
-            <span>Фонове зображення</span>
-            <Controller
-              control={control}
-              name={'backgroundImg'}
-              render={({ field: { value, onChange, ...field } }) => (
-                <div className="fileInputWrapper">
-                  <button type="button" className="fileInputButton">
-                    <input
-                      {...field}
-                      onChange={event => onChange(event.target.files[0])}
-                      type="file"
-                    />
-                    Вибрати файл
-                    <UploadIcon />
-                  </button>
-                  {errors.backgroundImg && (
-                    <p>{errors.backgroundImg.message}</p>
-                  )}
-                </div>
+            <div className="labelInput">
+              <span className="labelSpan">Основний опис маршруту</span>
+              <textarea
+                type="text"
+                {...register('mainDescription')}
+                id="mainDescription"
+                rows="6"
+              />
+
+              {errors.mainDescription && (
+                <p className="error">{errors.mainDescription.message}</p>
               )}
-            />
+            </div>
           </label>
-          <label>
-            <span>Основний опис маршруту</span>
-            <input
-              type="text"
-              {...register('mainDescription')}
-              id="mainDescription"
-            />
-            {errors.mainDescription && <p>{errors.mainDescription.message}</p>}
-          </label>
-          <label>
-            <span>Галерея</span>
-            <Controller
-              control={control}
-              name={'gallery'}
-              render={({ field: { value, onChange, ...field } }) => (
-                <div className="fileInputWrapper">
-                  <button type="button" className="fileInputButton">
-                    <input
-                      {...field}
-                      onChange={event => onChange(event.target.files)}
-                      type="file"
-                      multiple
-                    />
-                    Вибрати файли
-                    <UploadIcon />
-                  </button>
-                  {errors.gallery && <p>{errors.gallery.message}</p>}
-                </div>
-              )}
-            />
+          <label className="labelBtn">
+            <div className="labelInput">
+              <span className="labelSpan">Галерея</span>
+              <Controller
+                control={control}
+                name={'gallery'}
+                render={({ field: { value, onChange, ...field } }) => (
+                  <div className="fileInputWrapper">
+                    <button type="button" className="fileInputButton">
+                      <input
+                        {...field}
+                        onChange={event => onChange(event.target.files)}
+                        type="file"
+                        multiple
+                      />
+                      Вибрати файли
+                      <UploadIcon />
+                    </button>
+                    {errors.gallery && (
+                      <p className="error">{errors.gallery.message}</p>
+                    )}
+                  </div>
+                )}
+              />
+            </div>
           </label>
         </div>
         <button disabled={isSubmitting} type="submit" className="addRouteBtn">

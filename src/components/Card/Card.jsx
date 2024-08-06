@@ -1,11 +1,14 @@
 import React from 'react';
 import { StyledCard } from './Card.styled';
 
-import { MOUNTAIN_ROUTE } from 'constants/routes';
+import { GUEST_ROUTE, MOUNTAIN_ROUTE } from 'constants/routes';
 
-const Card = ({ id, title, thumbs, description }) => {
+const Card = ({ id, title, thumbs, description, isGuestRoute }) => {
   return (
-    <StyledCard to={`${MOUNTAIN_ROUTE}/${id}`} $backgroundimg={thumbs}>
+    <StyledCard
+      to={isGuestRoute ? `${GUEST_ROUTE}/${id}` : `${MOUNTAIN_ROUTE}/${id}`}
+      $backgroundimg={thumbs}
+    >
       <div className="img" />
 
       <div className="card">
