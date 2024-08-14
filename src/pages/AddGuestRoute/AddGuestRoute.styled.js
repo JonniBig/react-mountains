@@ -12,6 +12,21 @@ export const StyledAddRoute = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
 
+  .custom-file-upload-input {
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+
+  .custom-file-upload span {
+    font-weight: 600;
+    z-index: 1;
+  }
+
   .error {
     color: red;
   }
@@ -82,15 +97,18 @@ export const StyledAddRoute = styled.div`
     justify-content: space-between;
   }
   .labelInputShort {
-    margin-top: -38px;
     display: flex;
     flex-direction: column;
     gap: 12px;
     justify-content: space-between;
     max-width: 177px;
   }
+  .photoCardLable {
+    margin-top: -38px;
+  }
   .labelBtn {
-    max-width: 177px;
+    display: flex;
+    overflow: hidden;
   }
   .shortDescription {
     display: flex;
@@ -173,14 +191,14 @@ export const StyledAddRoute = styled.div`
     opacity: 0;
   }
   .fileInputButton {
-    max-width: 177px;
-    width: 100%;
+    position: relative;
+    width: 200px;
+    height: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
     border: none;
     background-color: transparent;
-    padding: 12px 8px;
     gap: 4px;
     color: var(--primary-color);
     border-radius: 4px;
@@ -213,5 +231,48 @@ export const StyledAddRoute = styled.div`
     opacity: 0.9;
     background-color: rgba(255, 255, 255, 0.5);
     box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+  }
+
+  .miniGallery {
+    display: flex;
+    flex-grow: 1;
+    gap: 12px;
+    align-items: center;
+    margin-left: 30px;
+    overflow-x: auto;
+  }
+  .miniGalleryItem {
+    width: 100%;
+    min-width: 200px;
+    max-width: 200px;
+    height: 100px;
+  }
+  .miniGalleryImg {
+    max-width: 200px;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .photoCardImg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .imagePreviewContainer {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+  }
+  .deleteImgIcon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    background-color: transparent;
+
+    padding: 5px;
   }
 `;

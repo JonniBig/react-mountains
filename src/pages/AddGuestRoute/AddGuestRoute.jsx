@@ -12,6 +12,7 @@ import { db, storage } from 'auth/base';
 import { addDoc, collection } from 'firebase/firestore';
 import { uploadFiles } from 'utils/uploadFiles';
 import { ReactComponent as UploadIcon } from 'assets/images/upload.svg';
+import { ReactComponent as DeleteImg } from 'assets/images/closeImg.svg';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { GUEST_ROUTE } from 'constants/routes';
@@ -31,9 +32,8 @@ const validationSchema = Yup.object().shape({
     )
     .test(
       'fileType',
-      'Файл має бути у форматі jpeg, webp або png',
-      value =>
-        value && ['image/jpeg', 'image/png', 'image/webp'].includes(value.type)
+      'Файл має бути у форматі jpeg або webp',
+      value => value && ['image/jpeg', 'image/webp'].includes(value.type)
     ),
   backgroundImg: Yup.mixed()
     .required("Фонове зображення є обов'язковим")
@@ -44,9 +44,8 @@ const validationSchema = Yup.object().shape({
     )
     .test(
       'fileType',
-      'Файл має бути у форматі jpeg, webp або png',
-      value =>
-        value && ['image/jpeg', 'image/png', 'image/webp'].includes(value.type)
+      'Файл має бути у форматі jpeg або webp',
+      value => value && ['image/jpeg', 'image/webp'].includes(value.type)
     ),
   mainDescription: Yup.string().required("Основний опис є обов'язковим"),
   gallery: Yup.mixed()
@@ -54,13 +53,10 @@ const validationSchema = Yup.object().shape({
     .test('fileSize', 'Розмір кожного файлу має бути менше 5MB', value =>
       Array.from(value).every(file => file.size <= 5242880)
     )
-    .test(
-      'fileType',
-      'Всі файли мають бути у форматі jpeg, webp або png',
-      value =>
-        Array.from(value).every(file =>
-          ['image/jpeg', 'image/png', 'image/webp'].includes(file.type)
-        )
+    .test('fileType', 'Всі файли мають бути у форматі jpeg або webp', value =>
+      Array.from(value).every(file =>
+        ['image/jpeg', 'image/webp'].includes(file.type)
+      )
     ),
 });
 
@@ -78,12 +74,17 @@ const AddGuestRoute = () => {
     resolver: yupResolver(validationSchema),
   });
 
+  const [photoCardImgUrl, setPhotoCardImgUrl] = useState(null);
+  const [backgroundImgUrl, setBackgroundImgUrl] = useState(null);
+  const [galleryImgUrls, setGalleryImgUrls] = useState(null);
+
   const submitForm = async formData => {
     setIsSubmitting(true);
     const backgroundImg = formData.backgroundImg;
     const photoCardImg = formData.photoCardImg;
     const gallery = formData.gallery;
     const mainDescription = formData.mainDescription;
+
     const routeName = formData.routeName;
     const shortDescription = formData.shortDescription;
     try {
@@ -148,14 +149,14 @@ const AddGuestRoute = () => {
 
       await addDoc(collection(db, 'guestRoutes'), finalRouteData);
       toast.success('Маршрут додано успішно!');
-      navigate(`${GUEST_ROUTE}/${routeName}`);
+      setTimeout(() => navigate(`${GUEST_ROUTE}/${routeName}`), 2000);
     } catch (error) {
       console.log('error: ', error);
     } finally {
       setIsSubmitting(false);
     }
   };
-
+  console.log('galleryImgUrls: ', galleryImgUrls);
   return (
     <StyledAddRoute $theme={theme}>
       <form className="form" onSubmit={handleSubmit(submitForm)}>
@@ -190,29 +191,53 @@ const AddGuestRoute = () => {
               <p className="error">{errors.shortDescription.message}</p>
             )}
           </label>
-          <label className="labelBtn">
+          <label className="labelBtn photoCardLable">
             <div className="labelInputShort">
               <Controller
                 control={control}
                 name={'photoCardImg'}
                 render={({ field: { value, onChange, ...field } }) => (
-                  <div className="fileInputWrapper">
-                    <button type="button" className="fileInputButton">
-                      <input
-                        {...field}
-                        onChange={event => onChange(event.target.files[0])}
-                        type="file"
-                      />
-                      Вибрати файл
-                      <UploadIcon />
-                    </button>
-                    {errors.photoCardImg && (
-                      <p className="error">{errors.photoCardImg.message}</p>
+                  <div className="fileInputButton">
+                    <input
+                      {...field}
+                      onChange={event => {
+                        onChange(event.target.files[0]);
+                        setPhotoCardImgUrl(
+                          URL.createObjectURL(event.target.files[0])
+                        );
+                      }}
+                      type="file"
+                      className="custom-file-upload-input"
+                    />
+                    {photoCardImgUrl ? (
+                      <div className="imagePreviewContainer">
+                        <img
+                          className="photoCardImg"
+                          src={photoCardImgUrl}
+                          alt="img"
+                          width={200}
+                        />
+                        <DeleteImg
+                          className="deleteImgIcon"
+                          onClick={() => {
+                            setPhotoCardImgUrl(null);
+                            onChange(null);
+                          }}
+                        />
+                      </div>
+                    ) : (
+                      <>
+                        <span>Вибрати файл</span>
+                        <UploadIcon />
+                      </>
                     )}
                   </div>
                 )}
               />
             </div>
+            {errors.photoCardImg && (
+              <p className="error">{errors.photoCardImg.message}</p>
+            )}
           </label>
           <label className="labelBtn">
             <div className="labelInput">
@@ -221,24 +246,49 @@ const AddGuestRoute = () => {
                 control={control}
                 name={'backgroundImg'}
                 render={({ field: { value, onChange, ...field } }) => (
-                  <div className="fileInputWrapper">
-                    <button type="button" className="fileInputButton">
-                      <input
-                        {...field}
-                        onChange={event => onChange(event.target.files[0])}
-                        type="file"
-                      />
-                      Вибрати файл
-                      <UploadIcon />
-                    </button>
-                    {errors.backgroundImg && (
-                      <p className="error">{errors.backgroundImg.message}</p>
+                  <div className="fileInputButton">
+                    <input
+                      {...field}
+                      onChange={event => {
+                        onChange(event.target.files[0]);
+                        setBackgroundImgUrl(
+                          URL.createObjectURL(event.target.files[0])
+                        );
+                      }}
+                      type="file"
+                      className="custom-file-upload-input"
+                    />
+                    {backgroundImgUrl ? (
+                      <div className="imagePreviewContainer">
+                        <img
+                          className="photoCardImg"
+                          src={backgroundImgUrl}
+                          alt="img"
+                          width={200}
+                        />
+                        <DeleteImg
+                          className="deleteImgIcon"
+                          onClick={() => {
+                            setBackgroundImgUrl(null);
+                            onChange(null);
+                          }}
+                        />
+                      </div>
+                    ) : (
+                      <>
+                        <span>Вибрати файл</span>
+                        <UploadIcon />
+                      </>
                     )}
                   </div>
                 )}
               />
             </div>
+            {errors.backgroundImg && (
+              <p className="error">{errors.backgroundImg.message}</p>
+            )}
           </label>
+
           <label>
             <div className="labelInput">
               <span className="labelSpan">Основний опис маршруту</span>
@@ -261,24 +311,42 @@ const AddGuestRoute = () => {
                 control={control}
                 name={'gallery'}
                 render={({ field: { value, onChange, ...field } }) => (
-                  <div className="fileInputWrapper">
-                    <button type="button" className="fileInputButton">
-                      <input
-                        {...field}
-                        onChange={event => onChange(event.target.files)}
-                        type="file"
-                        multiple
-                      />
-                      Вибрати файли
-                      <UploadIcon />
-                    </button>
-                    {errors.gallery && (
-                      <p className="error">{errors.gallery.message}</p>
-                    )}
+                  <div className="fileInputButton">
+                    <input
+                      {...field}
+                      onChange={event => {
+                        const files = Array.from(event.target.files);
+                        onChange(event.target.files);
+                        setGalleryImgUrls(
+                          files.map(file => URL.createObjectURL(file))
+                        );
+                      }}
+                      type="file"
+                      className="custom-file-upload-input"
+                      multiple
+                    />
+                    <span>Вибрати файли</span>
+                    <UploadIcon />
                   </div>
                 )}
               />
             </div>
+            <div className="miniGallery">
+              {galleryImgUrls !== null &&
+                galleryImgUrls.map(img => (
+                  <div className="miniGalleryItem">
+                    <img
+                      className="miniGalleryImg"
+                      src={img}
+                      alt="img"
+                      width={200}
+                    />
+                  </div>
+                ))}
+            </div>
+            {errors.gallery && (
+              <p className="error">{errors.gallery.message}</p>
+            )}
           </label>
         </div>
         <button disabled={isSubmitting} type="submit" className="addRouteBtn">
