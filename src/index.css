@@ -30,6 +30,7 @@ body {
   );
   --primary-color: #000;
   --color-text-gallery: #000000;
+  --semi-transparent-black-bg: rgba(0, 0, 0, 0.5);
 }
 
 body.dark {
@@ -55,6 +56,7 @@ body.dark {
   );
   --color-text-gallery: #c7b003;
   --primary-color: #16231a;
+  --semi-transparent-black-bg: rgba(0, 0, 0, 0.5);
 }
 
 * {

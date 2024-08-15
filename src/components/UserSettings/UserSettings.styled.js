@@ -9,9 +9,19 @@ export const StyledUserSettings = styled.div`
   z-index: 100;
   background-color: rgba(0, 0, 0, 0.8);
   overflow: auto;
+
+  .closeBtn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: transparent;
+    border: none;
+  }
+
   .previewAvatar {
     display: flex;
     align-items: center;
+    gap: 25px;
   }
   .inputWrapper {
     display: flex;
@@ -19,6 +29,34 @@ export const StyledUserSettings = styled.div`
     align-items: center;
   }
 
+  .labelInputName {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 25px;
+    width: 100%;
+  }
+
+  input[type='text'] {
+    padding: 10px;
+    margin: 0;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    opacity: 0.8;
+    box-shadow: rgba(174, 174, 174, 0.57) 6px 6px 10px 0px,
+      rgba(174, 174, 174, 0.57) -6px -6px 10px 0px;
+  }
+
+  input[type='text']:focus {
+    border-color: #4caf50;
+    outline: none;
+    opacity: 0.9;
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+  }
   .avatar {
     width: 150px;
     height: 150px;
@@ -32,7 +70,7 @@ export const StyledUserSettings = styled.div`
     flex-direction: column;
     align-items: center;
     max-width: 100%;
-    padding: 32px 12px;
+    padding: 32px 20px;
     z-index: 100;
     position: absolute;
     transform: translate(-50%, -50%);
@@ -40,17 +78,23 @@ export const StyledUserSettings = styled.div`
     left: 50%;
     background-color: white;
     border-radius: 10px;
+    gap: 30px;
+  }
+
+  .labelSpan {
+    font-size: 18px;
+    font-weight: 700;
   }
   input[type='file'] {
     display: none;
   }
 
-  .custom-file-upload {
+  /* .custom-file-upload {
     border: 1px solid #ccc;
     display: inline-block;
     padding: 6px 12px;
     cursor: pointer;
-  }
+  } */
   .loader {
     width: 12px;
     height: 8px;

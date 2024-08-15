@@ -70,6 +70,7 @@ const AddGuestRoute = () => {
     handleSubmit,
     formState: { errors },
     control,
+    setValue,
   } = useForm({
     resolver: yupResolver(validationSchema),
   });
@@ -79,6 +80,8 @@ const AddGuestRoute = () => {
   const [galleryImgUrls, setGalleryImgUrls] = useState(null);
 
   const submitForm = async formData => {
+    console.log('formData: ', formData);
+    return;
     setIsSubmitting(true);
     const backgroundImg = formData.backgroundImg;
     const photoCardImg = formData.photoCardImg;
@@ -156,7 +159,35 @@ const AddGuestRoute = () => {
       setIsSubmitting(false);
     }
   };
-  console.log('galleryImgUrls: ', galleryImgUrls);
+
+  const onDeleteGalleryItem = img => {
+    // Знаходимо індекс зображення, яке потрібно видалити
+    const imageIdx = galleryImgUrls.indexOf(img);
+
+    // Видаляємо URL з масиву `galleryImgUrls`
+    const updatedGalleryImgUrls = galleryImgUrls.filter(
+      (_, idx) => idx !== imageIdx
+    );
+    setGalleryImgUrls(updatedGalleryImgUrls);
+
+    // Очищаємо пам'ять, видаляючи об'єкт URL
+    URL.revokeObjectURL(galleryImgUrls[imageIdx]);
+
+    // Отримуємо доступ до оригінального списку файлів з інпуту
+    const originalFiles = Array.from(
+      document.querySelector('.custom-file-upload-input').files
+    );
+
+    // Видаляємо файл із списку файлів на основі індексу
+    const updatedFiles = originalFiles.filter((_, idx) => idx !== imageIdx);
+
+    // Створюємо новий масив файлів (FileList) без використання DataTransfer
+    const updatedFileList = updatedFiles.length > 0 ? updatedFiles : null;
+
+    // Оновлюємо значення поля 'gallery' у формі React Hook Form
+    setValue('gallery', updatedFileList);
+  };
+
   return (
     <StyledAddRoute $theme={theme}>
       <form className="form" onSubmit={handleSubmit(submitForm)}>
@@ -217,13 +248,16 @@ const AddGuestRoute = () => {
                           alt="img"
                           width={200}
                         />
-                        <DeleteImg
-                          className="deleteImgIcon"
-                          onClick={() => {
-                            setPhotoCardImgUrl(null);
-                            onChange(null);
-                          }}
-                        />
+                        <button type="button" className="deleteImgBtn">
+                          <DeleteImg
+                            className="deleteImgIcon"
+                            onClick={e => {
+                              e.preventDefault();
+                              setPhotoCardImgUrl(null);
+                              onChange(null);
+                            }}
+                          />
+                        </button>
                       </div>
                     ) : (
                       <>
@@ -266,13 +300,17 @@ const AddGuestRoute = () => {
                           alt="img"
                           width={200}
                         />
-                        <DeleteImg
-                          className="deleteImgIcon"
-                          onClick={() => {
+                        <button
+                          type="button"
+                          className="deleteImgBtn"
+                          onClick={e => {
+                            e.preventDefault();
                             setBackgroundImgUrl(null);
                             onChange(null);
                           }}
-                        />
+                        >
+                          <DeleteImg className="deleteImgIcon" />
+                        </button>
                       </div>
                     ) : (
                       <>
@@ -311,12 +349,19 @@ const AddGuestRoute = () => {
                 control={control}
                 name={'gallery'}
                 render={({ field: { value, onChange, ...field } }) => (
-                  <div className="fileInputButton">
+                  <div
+                    className={`fileInputButton ${
+                      galleryImgUrls !== null && galleryImgUrls.length > 0
+                        ? 'mobileFileInputButton'
+                        : ''
+                    }
+                     `}
+                  >
                     <input
                       {...field}
                       onChange={event => {
-                        const files = Array.from(event.target.files);
                         onChange(event.target.files);
+                        const files = Array.from(event.target.files);
                         setGalleryImgUrls(
                           files.map(file => URL.createObjectURL(file))
                         );
@@ -334,13 +379,23 @@ const AddGuestRoute = () => {
             <div className="miniGallery">
               {galleryImgUrls !== null &&
                 galleryImgUrls.map(img => (
-                  <div className="miniGalleryItem">
+                  <div key={img} className="miniGalleryItem">
                     <img
                       className="miniGalleryImg"
                       src={img}
                       alt="img"
                       width={200}
                     />
+                    <button
+                      type="button"
+                      className="deleteImgBtn"
+                      onClick={e => {
+                        e.preventDefault();
+                        onDeleteGalleryItem(img);
+                      }}
+                    >
+                      <DeleteImg className="deleteImgIcon" />
+                    </button>
                   </div>
                 ))}
             </div>

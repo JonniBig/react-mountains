@@ -101,7 +101,6 @@ export const StyledAddRoute = styled.div`
     flex-direction: column;
     gap: 12px;
     justify-content: space-between;
-    max-width: 177px;
   }
   .photoCardLable {
     margin-top: -38px;
@@ -211,6 +210,26 @@ export const StyledAddRoute = styled.div`
     box-shadow: rgb(136 138 136 / 57%) 3px 3px 6px 0px inset,
       rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
   }
+
+  @media (max-width: 576px) {
+    .mobileFileInputButton {
+      display: none;
+    }
+    .labelBtn {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .labelInputShort,
+    .fileInputButton {
+      margin: 0 auto;
+    }
+  }
+
+  /* @media (max-width: 768px) {
+   
+  } */
+
   textarea {
     width: 100%;
     padding: 10px;
@@ -242,6 +261,7 @@ export const StyledAddRoute = styled.div`
     overflow-x: auto;
   }
   .miniGalleryItem {
+    position: relative;
     width: 100%;
     min-width: 200px;
     max-width: 200px;
@@ -266,13 +286,24 @@ export const StyledAddRoute = styled.div`
     width: 100%;
     height: 100%;
   }
-  .deleteImgIcon {
+  .deleteImgBtn {
     position: absolute;
-    top: 5px;
-    right: 5px;
-    cursor: pointer;
-    background-color: transparent;
+    top: 0px;
+    right: 0px;
+    background-color: var(--semi-transparent-black-bg);
 
-    padding: 5px;
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+  }
+  .deleteImgIcon {
+    color: var(--primary-color-card);
+    width: 28px;
+    height: 28px;
   }
 `;

@@ -124,7 +124,7 @@ export const UserSetiings = ({ onCloseModal }) => {
     <StyledUserSettings onClick={onOverlayClick}>
       <form className="modal" onSubmit={formik.handleSubmit}>
         <button className="closeBtn" type="button" onClick={onCloseModal}>
-          <Close />
+          <Close className="closeBtn" />
         </button>
         <label className="previewAvatar">
           {user.photoURL ? (
@@ -136,7 +136,7 @@ export const UserSetiings = ({ onCloseModal }) => {
           ) : (
             <UserIcon />
           )}
-          <span className="inputWrapper custom-file-upload">
+          <span className="inputWrapper saveBtn">
             <span>Завантажити аватар</span>
             <input
               type="file"
@@ -153,8 +153,8 @@ export const UserSetiings = ({ onCloseModal }) => {
             />
           </span>
         </label>
-        <label>
-          <span>Змінити ім'я</span>
+        <label className="labelInputName">
+          <span className="labelSpan">Змінити ім'я</span>
           <input
             type="text"
             name="userName"
